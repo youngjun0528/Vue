@@ -1,6 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Main from "../views/Main.vue";
+import VCalendar from "v-calendar";
+
+Vue.use(VCalendar, {
+  componentPrefix: "vc" // Use <vc-calendar /> instead of <v-calendar />
+});
 
 Vue.use(VueRouter);
 
@@ -9,6 +15,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/cal",
+    name: "Main",
+    component: Main
   },
   {
     path: "/about",
