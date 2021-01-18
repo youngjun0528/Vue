@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!--CDN 링크 -->
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <style>
@@ -93,6 +98,14 @@
         $(".content").css({ display: "none" });
         $("#content5").css({ display: "block" });
       });
+      $("#sub6").click(function() {
+        $(".content").css({ display: "none" });
+        $("#content6").css({ display: "block" });
+      });
+      $("#sub7").click(function() {
+        $(".content").css({ display: "none" });
+        $("#content7").css({ display: "block" });
+      });
 
       $(".title").click(function() {
         //일단 서브메뉴 다 가립니다.
@@ -149,10 +162,15 @@
           </ul>
         </li>
         <li class="group">
-          <div class="title">title 3</div>
+          <div class="title">Template</div>
           <ul class="sub">
-            <li><a href="#">sub3</a></li>
-            <li><a href="#">sub3</a></li>
+            <li><a href="#" id="sub6">Vue Template</a></li>
+          </ul>
+        </li>
+        <li class="group">
+          <div class="title">Application</div>
+          <ul class="sub">
+            <li><a href="#" id="sub7">Application</a></li>
           </ul>
         </li>
       </ul>
@@ -195,8 +213,55 @@
       <div class="content" id="content5">
         <div id="httpaxios">{{result}}</div>
       </div>
+      <div class="content" id="content6">
+        <div id="vuetemplate">
+          <h5>v-if & v-show Test</h5>
+          <p>
+            v-if의 경우 DOM 객체를 삭제, <br />
+            v-show의 경우 DOM 객체를 css display:none 상태로 변경 <br />
+            javascript에서 DOM 객체를 보이고 싶지 않지만, 객체 내용 참조가
+            필요할 때 v-show 사용함. <br />
+            javascript 표현식도 사용가능하나, 복잡한 연산의 경우 computed를
+            통해서 처리하여 최종값만 표시한다.
+          </p>
+          <p v-if="flag">V-IF Test</p>
+          <p v-show="flag">V-SHOW Test</p>
+          <h5>computed Test</h5>
+          <p>
+            javascript 표현식도 사용가능하나, 복잡한 연산의 경우 computed를
+            통해서 처리하여 최종값만 표시한다. <br />computed 의 경우, 데이터
+            연산이 능동적으로 갱신된다. <br />methods의 경우 데이터 연산이
+            수동적으로 (함수 호출 이나 이벤트 발생 등) 갱신된다.
+          </p>
+          <p>{{reversedMsg}}</p>
+
+          <h5>v-for Test</h5>
+          <ul>
+            <li v-for="system in systems">{{system}}</li>
+          </ul>
+          <h5>v-bind Test</h5>
+          <h5 v-bind:id="uid">{{uid}}</h5>
+          <h5>watch & v-model Test</h5>
+          <p>
+            computed 는 내장 API를 사용한 간단한 연산 watch는 데이터 호출과 같은
+            시간이 많이 소모되는 비동기 처리 연산 <br />
+            v-model은 input, select, textarea 태그에서만 사용, 입력한 값을 뷰
+            인스턴스의 데이터와 즉시 동기화
+          </p>
+          <input v-model="message" />
+          <p>{{checkMsg}}</p>
+          <h5>methods & v-on Test</h5>
+          <p>
+            v-on click 이벤트는 methods의 함수를 호출한다. <br />Event 접근시
+            $event 변수를 사용해서 현재 객체를 전달가능
+          </p>
+          <button v-on:click="popupAlert($event, 10)">Click Event</button>
+        </div>
+      </div>
+      <div class="content" id="content7">
+        <div id="application"></div>
+      </div>
     </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
-
