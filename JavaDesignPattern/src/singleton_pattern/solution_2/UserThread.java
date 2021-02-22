@@ -1,4 +1,4 @@
-package singleton_pattern.solution_2;
+package src.singleton_pattern.solution_2;
 
 public class UserThread extends Thread {
     public UserThread(String name) {

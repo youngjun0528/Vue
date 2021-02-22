@@ -1,4 +1,4 @@
-package command_pattern.basic;
+package src.command_pattern.basic;
 
 public class Client {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package command_pattern.basic_problem1;
+package src.command_pattern.basic_problem1;
 
 public class Button {
     private Alarm theAlarm;

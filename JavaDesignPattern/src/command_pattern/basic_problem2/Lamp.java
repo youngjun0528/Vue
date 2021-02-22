@@ -1,4 +1,4 @@
-package command_pattern.basic_problem2;
+package src.command_pattern.basic_problem2;
 
 public class Lamp {
     public void turnOn() {

@@ -1,4 +1,4 @@
-package singleton_pattern.basic;
+package src.singleton_pattern.basic;
 
 public class User {
     private String name;

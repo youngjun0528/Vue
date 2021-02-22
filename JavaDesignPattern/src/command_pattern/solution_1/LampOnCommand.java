@@ -1,4 +1,4 @@
-package command_pattern.solution_1;
+package src.command_pattern.solution_1;
 
 public class LampOnCommand implements CommandInterface {
     private Lamp theLamp;

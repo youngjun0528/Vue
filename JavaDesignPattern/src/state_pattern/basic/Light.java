@@ -1,4 +1,4 @@
-package state_pattern.basic;
+package src.state_pattern.basic;
 
 public class Light {
     private static int ON = 0;

@@ -1,4 +1,4 @@
-package singleton_pattern.basic;
+package src.singleton_pattern.basic;
 
 public class Main {
     private static final int User_NUM = 5;
