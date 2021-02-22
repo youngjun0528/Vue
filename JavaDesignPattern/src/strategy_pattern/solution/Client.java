@@ -1,4 +1,4 @@
-package src.strategy_pattern.solution;
+package strategy_pattern.solution;
 
 public class Client {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package src.strategy_pattern.basic;
+package strategy_pattern.basic;
 
 public class TaekwonV extends Robot {
     public TaekwonV(String name) {

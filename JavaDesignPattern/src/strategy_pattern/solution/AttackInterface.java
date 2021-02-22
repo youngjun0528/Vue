@@ -1,4 +1,4 @@
-package src.strategy_pattern.solution;
+package strategy_pattern.solution;
 
 public interface AttackInterface {
     public void attack();

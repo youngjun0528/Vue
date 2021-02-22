@@ -1,4 +1,4 @@
-package src.singleton_pattern.solution_2;
+package singleton_pattern.solution_2;
 
 public class Client {
     private static final int THREAD_NUM = 5;

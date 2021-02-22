@@ -1,4 +1,4 @@
-package src.singleton_pattern.multithread;
+package singleton_pattern.multithread;
 
 public class Client {
     private static final int THREAD_NUM = 5;

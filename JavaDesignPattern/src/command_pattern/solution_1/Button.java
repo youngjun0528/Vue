@@ -1,4 +1,4 @@
-package src.command_pattern.solution_1;
+package command_pattern.solution_1;
 
 public class Button {
     private CommandInterface theCommand;

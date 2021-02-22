@@ -1,4 +1,4 @@
-package src.state_pattern.solution_2;
+package state_pattern.solution_2;
 
 public class OnState implements StateInterface {
     // Interface 객체 생성시 반복적으로 생성할 필요없이 한번만 생성해도 되므로 Singleton 패턴으로 만든다.

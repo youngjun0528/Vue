@@ -1,4 +1,4 @@
-package src.strategy_pattern.basic;
+package strategy_pattern.basic;
 
 public abstract class Robot {
     private String name;

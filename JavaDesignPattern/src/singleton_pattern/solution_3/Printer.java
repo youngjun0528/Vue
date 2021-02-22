@@ -1,4 +1,4 @@
-package src.singleton_pattern.solution_3;
+package singleton_pattern.solution_3;
 
 public class Printer {
     // public Printer() {

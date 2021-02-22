@@ -1,4 +1,4 @@
-package src.state_pattern.basic;
+package state_pattern.basic;
 
 public class Client {
     public static void main(String[] args) {

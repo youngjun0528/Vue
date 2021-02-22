@@ -1,4 +1,4 @@
-package src.command_pattern.solution_1;
+package command_pattern.solution_1;
 
 public class AlarmOnCommand implements CommandInterface {
     private Alarm theAlarm;

@@ -1,4 +1,4 @@
-package src.singleton_pattern.multithread;
+package singleton_pattern.multithread;
 
 public class Printer {
     // public Printer() {

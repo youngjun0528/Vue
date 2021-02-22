@@ -1,4 +1,4 @@
-package src.command_pattern.basic;
+package command_pattern.basic;
 
 public class Button {
     private Lamp theLamp;

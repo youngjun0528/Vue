@@ -1,4 +1,4 @@
-package src.state_pattern.solution_1;
+package state_pattern.solution_1;
 
 public class SleepState implements StateInterface {
 

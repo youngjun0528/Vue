@@ -1,4 +1,4 @@
-package src.state_pattern.solution_2;
+package state_pattern.solution_2;
 
 public interface StateInterface {
     public void on_button_pushed(Light light);
