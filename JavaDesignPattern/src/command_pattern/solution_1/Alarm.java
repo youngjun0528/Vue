@@ -1,4 +1,4 @@
-package command_pattern.solution_2;
+package command_pattern.solution_1;
 
 public class Alarm {
     public void start() {
