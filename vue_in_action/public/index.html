@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
+    </noscript>
+    <div id="app">
+      <main>
+        <div class="row product">
+          <div class="col">
+            <figure>
+              <img v-bind:src="product.image" />
+            </figure>
+          </div>
+          <div class="col col-expand">
+            <h1 v-text="product.title"></h1>
+            <p v-html="product.description"></p>
+            <p class="price">
+              {{product.price | formatPrice}}
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
