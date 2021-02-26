@@ -4,20 +4,17 @@ public class ThirdElevatorFactory extends ElevatorFactory {
 
     @Override
     public Motor createMotor() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ThirdMotor();
     }
 
     @Override
     public Door createDoor() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ThridDoor();
     }
 
     @Override
     public Lamp createLamp() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ThirdLamp();
     }
 
 }
