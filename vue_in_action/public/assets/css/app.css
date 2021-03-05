@@ -1,4 +1,4 @@
-@charset "utf-8";
+rset "utf-8";
 @import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
 
 html,
@@ -205,8 +205,14 @@ header h1 {
 }
 
 body {
-  max-width: 970px;
+  max-width: 100%;
 }
+
+#app {
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
 .cart {
   padding: 20px 50px;
 }

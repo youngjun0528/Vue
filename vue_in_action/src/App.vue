@@ -19,29 +19,70 @@
     </header>
     <main>
       <div class="row product">
-        <div v-if="showProduct"></div>
-        <div v-else></div>
-        <div class="col">
-          <figure>
-            <img v-bind:src="product.image" />
-          </figure>
+        <div v-if="showProduct">
+          <div class="row product">
+            <div v-for="product in sortedProducts" v-bind:key="product.id">
+              <div class="row">
+                <div class="col-md-5 col-md-offset-0">
+                  <figure>
+                    <img class="product" v-bind:src="product.image" />
+                  </figure>
+                </div>
+                <div class="col-md-6 col-md-offset-0 description">
+                  <h1 v-text="product.title"></h1>
+                  <p v-html="product.description"></p>
+                  <p class="price">
+                    {{ product.price | formatPrice }}
+                  </p>
+                  <button
+                    class="btn btn-primary btn-lg"
+                    v-on:click="addToCart(product)"
+                    v-if="canAddToCart(product)"
+                  >
+                    장바구니 담기
+                  </button>
+                  <button disabled="true" class="btn btn-primary btn-lg" v-else>
+                    장바구니 담기
+                  </button>
+                  <span
+                    class="inventory-message"
+                    v-if="
+                      product.availableInventory - cartCount(product.id) == 0
+                    "
+                  >
+                    품절!
+                  </span>
+                  <span
+                    class="inventory-message"
+                    v-else-if="
+                      product.availableInventory - cartCount(product.id) < 5
+                    "
+                  >
+                    {{ product.availableInventory - cartCount(product.id) }}
+                    남았습니다.
+                  </span>
+                  <span class="inventory-message" v-else>
+                    지금 구매하세요!
+                  </span>
+                  <span
+                    v-bind:class="{
+                      'rating-active': checkRating(n, product),
+                    }"
+                    v-for="n in 5"
+                    v-bind:key="n"
+                  >
+                  </span>
+                </div>
+              </div>
+              <!-- end of line -->
+              <hr />
+            </div>
+            <!-- end of v-for -->
+          </div>
+          <!-- end of showproduct -->
         </div>
-        <div class="col col-expand">
-          <h1 v-text="product.title"></h1>
-          <p v-html="product.description"></p>
-          <p class="price">
-            {{ product.price | formatPrice }}
-          </p>
-          <button
-            class="btn btn-primary btn-lg"
-            v-on:click="addToCart"
-            v-if="canAddToCart"
-          >
-            장바구니 담기
-          </button>
-          <button disabled="true" class="btn btn-primary btn-lg" v-else>
-            장바구니 담기
-          </button>
+        <div v-else>
+          <div class="row"></div>
         </div>
       </div>
     </main>
@@ -178,6 +219,10 @@ export default {
     if (APP_LOG_LIFECYCLE_EVENTS) {
       console.log("created");
     }
+    this.$http.get("/assets/products.json").then((response) => {
+      this.products = response.data.products;
+      console.log(this.products);
+    });
   },
   beforeMount: function() {
     if (APP_LOG_LIFECYCLE_EVENTS) {
@@ -212,16 +257,7 @@ export default {
   data: function() {
     return {
       sitename: "애완용품샵",
-      product: {
-        id: 1001,
-        title: "고양이 사료, 25파운드",
-        description:
-          "당신의 고양이를 이한 <em>거부할 수 없는</em>, " +
-          "유기농 25파운드 사료입니다.",
-        price: 2000,
-        image: "assets/images/product-fullsize.png",
-        availableInventory: 5,
-      },
+      products: [],
       cart: [],
       showProduct: true,
       order: {
@@ -247,22 +283,50 @@ export default {
     };
   },
   computed: {
-    cartItemCount: function() {
+    cartItemCount() {
       return this.cart.length || "";
     },
-    canAddToCart: function() {
-      return this.product.availableInventory > this.cartItemCount;
+    sortedProducts() {
+      if (this.products.length > 0) {
+        let productArray = this.products.slice(0);
+        var compareTest = function compare(a, b) {
+          if (a.title.toLowerCase() < b.title.toLowerCase()) {
+            return -1;
+          }
+          if (a.title.toLowerCase() > b.title.toLowerCase()) {
+            return 1;
+          }
+          return 0;
+        };
+        return productArray.sort(compareTest);
+      }
+      return this.products;
     },
   },
   methods: {
+    checkRating(n, product) {
+      return product.rating - n >= 0;
+    },
     showCheckout: function() {
       this.showProduct = this.showProduct ? false : true;
     },
-    addToCart: function() {
-      this.cart.push(this.product.id);
+    addToCart: function(product) {
+      this.cart.push(product.id);
     },
-    submitForm() {
+    submitForm: function() {
       alert("제출 완료");
+    },
+    canAddToCart: function(product) {
+      return product.availableInventory > this.cartCount(product.id);
+    },
+    cartCount: function(id) {
+      let count = 0;
+      for (var i = 0; i < this.cart.length; i++) {
+        if (this.cart[i] === id) {
+          count++;
+        }
+      }
+      return count;
     },
   },
   filters: {
