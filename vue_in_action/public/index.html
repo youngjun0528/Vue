@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -23,22 +22,7 @@
       >
     </noscript>
     <div id="app">
-      <main>
-        <div class="row product">
-          <div class="col">
-            <figure>
-              <img v-bind:src="product.image" />
-            </figure>
-          </div>
-          <div class="col col-expand">
-            <h1 v-text="product.title"></h1>
-            <p v-html="product.description"></p>
-            <p class="price">
-              {{product.price | formatPrice}}
-            </p>
-          </div>
-        </div>
-      </main>
+    
     </div>
     <!-- built files will be auto injected -->
   </body>

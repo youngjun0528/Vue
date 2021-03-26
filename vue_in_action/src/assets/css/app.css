@@ -1,4 +1,4 @@
-rset "utf-8";
+/* rset "utf-8"; */
 @import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
 
 html,
@@ -197,22 +197,14 @@ body {
   -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
 }
 
-header h1 {
-  padding: 10px 20px;
-  width: 50%;
-  float: left;
-  text-align: left;
+
+header h1{
+    padding: 10px 20px;
 }
 
 body {
-  max-width: 100%;
+    max-width: 970px !important;
 }
-
-#app {
-  max-height: 100%;
-  overflow-y: scroll;
-}
-
 .cart {
   padding: 20px 50px;
 }
@@ -225,7 +217,7 @@ body {
 }
 
 .submit {
-  margin-top: 20px;
+  margin-top:20px;
   float: right;
 }
 
@@ -234,48 +226,36 @@ body {
 }
 .description {
   font-size: 150%;
-  margin-top: 50px;
+  margin-top:50px;
 }
 
 .inventory-message {
   margin-left: 20px;
   font-weight: bold;
   font-size: 120%;
-  display: inline-block;
+  display:inline-block;
 }
 
-.textalign-set {
-  text-align: left;
-}
 
 .product {
   margin-top: 30px;
-  margin-left: 20px !important;
-  max-width: 100%;
-  text-align: left;
-}
-
-.col {
-  float: left;
   margin-left: 20px;
+  max-height:300px;
+  max-width:100%;
 }
-
-.col-expand {
-  width: 50%;
-}
-
 .figure {
+
 }
 
 .rating-active:before {
-  content: "\2605";
-  position: absolute;
+   content: "\2605";
+   position: absolute;
 }
 .rating {
   display: inline;
   margin-left: 10px;
   margin-top: 10px;
-  float: right;
+  float:right;
 }
 .rating > span {
   display: inline-block;
@@ -284,8 +264,7 @@ body {
 }
 
 @media (min-width: 1200px) {
-  .container {
-    max-width: 970px;
-  }
+    .container{
+        max-width: 970px;
+    }
 }
-
