@@ -20,7 +20,7 @@ export default {
 }
 
 .fade-enter,
-.face-leave {
+.face-leave-to {
   opacity: 0;
 }
 </style>
