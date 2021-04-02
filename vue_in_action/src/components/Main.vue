@@ -31,24 +31,26 @@
             <button disabled="true" class="btn btn-primary btn-lg" v-else>
               장바구니 담기
             </button>
-			<transition name='bounce' mode="out-in">
-				<span
-				  class="inventory-message"
-				  v-if="product.availableInventory - cartCount(product.id) === 0"
-				  key ='0'
-				>
-				  품절!
-				</span>
-				<span
-				  class="inventory-message"
-				  v-else-if="product.availableInventory - cartCount(product.id) < 5"
-				key =''
-					  >
-				  {{ product.availableInventory - cartCount(product.id) }}
-				  남았습니다!
-				</span>
-				<span class="inventory-message" v-else>지금 구매하세요! </span>
-			</transition>
+            <transition name="bounce" mode="out-in">
+              <span
+                class="inventory-message"
+                v-if="product.availableInventory - cartCount(product.id) === 0"
+                key="0"
+              >
+                품절!
+              </span>
+              <span
+                class="inventory-message"
+                v-else-if="
+                  product.availableInventory - cartCount(product.id) < 5
+                "
+                key=""
+              >
+                {{ product.availableInventory - cartCount(product.id) }}
+                남았습니다!
+              </span>
+              <span class="inventory-message" v-else>지금 구매하세요! </span>
+            </transition>
             <div class="rating">
               <span
                 v-bind:class="{ 'rating-active': checkRating(n, product) }"
@@ -68,13 +70,11 @@
 </template>
 
 <script>
-import axios from "axios";
 import MyHeader from "./Header.vue";
 export default {
   name: "imain",
   data() {
     return {
-      products: [],
       cart: [],
     };
   },
@@ -119,6 +119,9 @@ export default {
       }
       return this.products;
     },
+    products() {
+      return this.$store.getters.products;
+    },
   },
   filters: {
     formatPrice(price) {
@@ -140,10 +143,7 @@ export default {
     },
   },
   created: function() {
-    axios.get("../static/products.json").then((response) => {
-      this.products = response.data.products;
-      console.log(this.products);
-    });
+    this.$store.dispatch("initStore");
   },
 };
 </script>
@@ -155,21 +155,26 @@ export default {
   backface-visibility: hidden;
 }
 
-	@keyframes shake{
-		10%, 90%{
-			color: red;
-			transform: translate3d(-1px, 0, 0);
-		}
-		
-		20%, 80%{
-			transform: translate3d(2px, 0, 0);
-		}
-		30%, 50%, 70%{
-			color: red;
-			transform: translate3d(-4px, 0, 0 );
-		}
-		40%, 60%{
-			transform: translate3d(4px, 0, 0);
-		}
-	}
+@keyframes shake {
+  10%,
+  90% {
+    color: red;
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    color: red;
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 </style>
