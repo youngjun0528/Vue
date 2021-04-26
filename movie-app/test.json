@@ -1,0 +1,187 @@
+{
+    "source": "mockoon:1.13.0",
+    "data": [
+        {
+            "type": "environment",
+            "item": {
+                "uuid": "",
+                "lastMigration": 13,
+                "name": "PRODUCT",
+                "endpointPrefix": "",
+                "latency": 0,
+                "port": 3001,
+                "routes": [
+                    {
+                        "uuid": "",
+                        "documentation": "",
+                        "method": "get",
+                        "endpoint": "v1/health",
+                        "responses": [
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"status\": \"UP\"\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false
+                    },
+                    {
+                        "uuid": "",
+                        "documentation": "",
+                        "method": "get",
+                        "endpoint": "v1/product/:type",
+                        "responses": [
+                            {
+                                "uuid": "",
+                                "body": "{\r\n  \"products\":[\r\n    {\r\n      \"id\": 1001,\r\n      \"title\": \"고양이 사료, 25파운드\",\r\n      \"description\": \"당신의 고양이를 위한 <em>거부할 수 없는</em>, 유기농 25파운드 사료입니다.\",\r\n      \"price\": 2000,\r\n      \"image\": \"product-fullsize.png\",\r\n      \"availableInventory\": 10,\r\n      \"rating\": 1\r\n    },\r\n    {\r\n      \"id\": 1002,\r\n      \"title\": \"실뭉치\",\r\n      \"description\": \"실뭉치로 당신의 고양이에게 <strong>오랜</strong> 놀이 시간을 주세요!\",\r\n      \"price\": 299,\r\n      \"image\": \"yarn.jpg\",\r\n      \"availableInventory\": 7,\r\n      \"rating\": 1\r\n    },\r\n    {\r\n      \"id\": 1003,\r\n      \"title\": \"고양이 화장실\",\r\n      \"description\": \"당신의 고양이를 위한 최고급 화장실입니다.\",\r\n      \"price\": 1100,\r\n      \"image\": \"cat-litter.jpg\",\r\n      \"availableInventory\": 99,\r\n      \"rating\": 4\r\n    },\r\n    {\r\n      \"id\": 1004,\r\n      \"title\": \"고양이 집\",\r\n      \"description\": \"고양이가 놀 수 있는 장소!\",\r\n      \"price\": 799,\r\n      \"image\": \"cat-house.jpg\",\r\n      \"availableInventory\": 11,\r\n      \"rating\": 5\r\n    },\r\n    {\r\n      \"id\": 1005,\r\n      \"title\": \"레이저 포인터\",\r\n      \"description\": \"이 <em>놀라운</em> 상품으로 고양이와 놀아주세요.\",\r\n      \"price\": 4999,\r\n      \"image\": \"laser-pointer.jpg\",\r\n      \"availableInventory\": 25,\r\n      \"rating\": 1\r\n    }\r\n  ]\r\n}\r\n\r\n",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "go",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":[]\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\r\n  \"products\":[\r\n    {\r\n      \"id\": 1001,\r\n      \"title\": \"Cat food, 25 pounds\",\r\n      \"description\": \"This is an <em>non-deniable</em>, organic 25lb feed for your cat.\",\r\n      \"price\": 2000,\r\n      \"image\": \"product-fullsize.png\",\r\n      \"availableInventory\": 10,\r\n      \"rating\": 1\r\n    },\r\n    {\r\n      \"id\": 1002,\r\n      \"title\": \"Thread\",\r\n      \"description\": \"Give your cat a <strong>long</strong> play time with a bunch of threads!\",\r\n      \"price\": 299,\r\n      \"image\": \"yarn.jpg\",\r\n      \"availableInventory\": 7,\r\n      \"rating\": 1\r\n    },\r\n    {\r\n      \"id\": 1003,\r\n      \"title\": \"Cat toilet\",\r\n      \"description\": \"This is the best toilet for your cat.\",\r\n      \"price\": 1100,\r\n      \"image\": \"cat-litter.jpg\",\r\n      \"availableInventory\": 99,\r\n      \"rating\": 4\r\n    },\r\n    {\r\n      \"id\": 1004,\r\n      \"title\": \"Cat house\",\r\n      \"description\": \"A place where cats can play!\",\r\n      \"price\": 799,\r\n      \"image\": \"cat-house.jpg\",\r\n      \"availableInventory\": 11,\r\n      \"rating\": 5\r\n    },\r\n    {\r\n      \"id\": 1005,\r\n      \"title\": \"Laser pointer\",\r\n      \"description\": \"Play with your cat with this <em>amazing</em> product.\",\r\n      \"price\": 4999,\r\n      \"image\": \"laser-pointer.jpg\",\r\n      \"availableInventory\": 25,\r\n      \"rating\": 1\r\n    }\r\n  ]\r\n}\r\n\r\n",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "end",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false
+                    },
+                    {
+                        "uuid": "",
+                        "documentation": "",
+                        "method": "get",
+                        "endpoint": "v1/product/detail/:id",
+                        "responses": [
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":\n    {\n      \"id\": 1001,\n      \"title\": \"고양이 사료, 25파운드\",\n      \"description\": \"당신의 고양이를 위한 <em>거부할 수 없는</em>, 유기농 25파운드 사료입니다.\",\n      \"price\": 2000,\n      \"image\": \"product-fullsize.png\",\n      \"availableInventory\": 10,\n      \"rating\": 1\n    }\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "1001",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":\n    {\n      \"id\": 1002,\n      \"title\": \"실뭉치\",\n      \"description\": \"실뭉치로 당신의 고양이에게 <strong>오랜</strong> 놀이 시간을 주세요!\",\n      \"price\": 299,\n      \"image\": \"yarn.jpg\",\n      \"availableInventory\": 7,\n      \"rating\": 1\n    }\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "1002",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":\n    {\n      \"id\": 1003,\n      \"title\": \"고양이 화장실\",\n      \"description\": \"당신의 고양이를 위한 최고급 화장실입니다.\",\n      \"price\": 1100,\n      \"image\": \"assets/images/cat-litter.jpg\",\n      \"availableInventory\": 99,\n      \"rating\": 4\n    }\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "1003",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":\n    {\n      \"id\": 1004,\n      \"title\": \"고양이 집\",\n      \"description\": \"고양이가 놀 수 있는 장소!\",\n      \"price\": 799,\n      \"image\": \"assets/images/cat-house.jpg\",\n      \"availableInventory\": 11,\n      \"rating\": 5\n    }\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "1004",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            },
+                            {
+                                "uuid": "",
+                                "body": "{\n  \"products\":\n    {\n      \"id\": 1005,\n      \"title\": \"레이저 포인터\",\n      \"description\": \"이 <em>놀라운</em> 상품으로 고양이와 놀아주세요.\",\n      \"price\": 4999,\n      \"image\": \"assets/images/laser-pointer.jpg\",\n      \"availableInventory\": 25,\n      \"rating\": 1\n    }\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "1005",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false
+                    }
+                ],
+                "proxyMode": false,
+                "proxyHost": "",
+                "https": false,
+                "cors": true,
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "proxyReqHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ],
+                "proxyResHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ]
+            }
+        }
+    ]
+}
