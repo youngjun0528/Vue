@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import movie from "./movie";
+import movieList from "./movieList";
 
 Vue.use(Vuex);
 
@@ -8,5 +8,5 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-  modules: { movie },
+  modules: { movieList },
 });

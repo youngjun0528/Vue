@@ -15,25 +15,21 @@ const mutations = {
 };
 
 const actions = {
-  initStore: ({ commit }) => {
-    let searchStr = "바다";
+  initStore: ({ commit }, Target) => {
+    let searchStr = "go";
+    if (Target == 2) searchStr = "end";
 
     const config = {
       headers: {
-        "X-Naver-Client-Id": "5HoKbUvONS7kwGYTyf4l",
-        "X-Naver-Client-Secret": "fpR2TOe9Nt",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
     };
 
     axios
-      .get(
-        "/v1/search/movie.json?query=" + encodeURI(searchStr) + "&display=10",
-        config
-      )
+      .get("/v1/product/" + encodeURI(searchStr), config)
       .then((response) => {
-        console.log(response);
-        commit("SET_STORE", response.data.items);
+        console.log(response.data.products);
+        commit("SET_STORE", response.data.products);
       });
   },
   getStore: ({ commit }, ID) => {
@@ -41,20 +37,15 @@ const actions = {
 
     const config = {
       headers: {
-        "X-Naver-Client-Id": "5HoKbUvONS7kwGYTyf4l",
-        "X-Naver-Client-Secret": "fpR2TOe9Nt",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
     };
 
     axios
-      .get(
-        "/v1/search/movie.json?query=" + encodeURI(searchStr) + "&display=1",
-        config
-      )
+      .get("/v1/product/detail/" + encodeURI(searchStr), config)
       .then((response) => {
         console.log(response);
-        commit("SET_STORE", response.data.items);
+        commit("SET_STORE_ONE", response.data.products.items);
       });
   },
 };

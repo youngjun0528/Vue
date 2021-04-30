@@ -1,5 +1,5 @@
 module.exports = {
   devServer: {
-    proxy: "https://openapi.naver.com",
+    proxy: "http://127.0.0.1:3001",
   },
 };
