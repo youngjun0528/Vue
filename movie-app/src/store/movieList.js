@@ -3,11 +3,15 @@ import axios from "axios";
 const state = {
   movieList: [],
   movie: [],
+  pageMode: 1,
 };
 
 const mutations = {
   SET_STORE(state, movieList) {
     state.movieList = movieList;
+  },
+  SET_STATUS(state, pageMode) {
+    state.pageMode = pageMode;
   },
   SET_STORE_ONE(state, movie) {
     state.movie = movie;
@@ -17,7 +21,9 @@ const mutations = {
 const actions = {
   initStore: ({ commit }, Target) => {
     let searchStr = "go";
-    if (Target == 2) searchStr = "end";
+    if (Target == 2) {
+      searchStr = "end";
+    }
 
     const config = {
       headers: {
@@ -28,9 +34,9 @@ const actions = {
     axios
       .get("/v1/product/" + encodeURI(searchStr), config)
       .then((response) => {
-        console.log(response.data.products);
         commit("SET_STORE", response.data.products);
       });
+    commit("SET_STATUS", Target);
   },
   getStore: ({ commit }, ID) => {
     let searchStr = ID;
@@ -44,14 +50,15 @@ const actions = {
     axios
       .get("/v1/product/detail/" + encodeURI(searchStr), config)
       .then((response) => {
-        console.log(response);
-        commit("SET_STORE_ONE", response.data.products.items);
+        commit("SET_STORE_ONE", response.data.products);
       });
   },
 };
 
 const getters = {
   movieList: (state) => state.movieList,
+  movie: (state) => state.movie,
+  status: (state) => state.pageMode,
 };
 
 export default {

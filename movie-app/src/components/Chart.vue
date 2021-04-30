@@ -8,10 +8,10 @@
         {{getCurrentTime}}
       </div>
       <div>
-        <p v-on:click="changeList(1)" 
+        <p v-on:click="changeList(1)" v-bind:class="{red: attachOne}"
           style="float: left;">국내</p>
         <p style='float: left;'>|</p>
-        <p v-on:click="changeList(2)"
+        <p v-on:click="changeList(2)" v-bind:class="{red: attachTwo}"
           style="float: left;">해외</p>
       </div>
     </div>
@@ -25,7 +25,7 @@
           <!-- <h1 v-text="product.title"></h1> -->
           <router-link
             tag="h4"
-            :to="{ name: 'detail', params: { id: product.id } }"
+            :to="{ name: 'detail', params: { id: product.id, target: attachTarget }}"
             >
           <p style='display:block;
     overflow: hidden; 
@@ -52,9 +52,25 @@
 <script>
 export default {
   name: "Chart",
+  data() {
+    return {
+      attachTarget: 1,
+      attachOne: true,
+      attachTwo: false,
+    }
+  },
   methods: {
     changeList(target){
       this.$store.dispatch("initStore", target);
+      if(target == 1){
+        this.attachTarget = 1;
+        this.attachOne = true;
+        this.attachTwo = false;
+      }else{
+        this.attachTarget = 2;
+        this.attachOne = false;
+        this.attachTwo = true;
+      }
     }
   },
   computed: {
@@ -92,7 +108,6 @@ export default {
         };
         return productArray.sort(compareTest);
       }
-      console.log(this.products)
       return this.products;
     },
   },
@@ -102,14 +117,18 @@ export default {
     },
   },
   created: function() {
-    this.$store.dispatch("initStore");
-  },
+    if(this.products.length == 0){
+      this.$store.dispatch("initStore", this.attachTarget);
+    }else{
+      this.changeList(this.$store.getters.status);
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .red {
-  background-color: red;
+  color: red;
 }
 </style>
