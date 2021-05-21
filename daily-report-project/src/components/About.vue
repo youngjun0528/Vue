@@ -1,6 +1,8 @@
 <template>
-  <div>
-      About
+  <div class='about'>
+      <div class='about-inner'>
+          <h1>About</h1>
+      </div>
   </div>
 </template>
 
@@ -16,6 +18,6 @@ export default {
 }
 </script>
 
-<style scope>
+<style>
 
 </style>

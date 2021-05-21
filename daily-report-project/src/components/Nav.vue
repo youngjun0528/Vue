@@ -40,7 +40,8 @@ export default {
     name : 'Nav',
     methods : {
         today() {
-            let todayUrl = '/day/' + moment(new Date()).format('YYYY-MM-DD');
+            //let todayUrl = '/day/' + moment(new Date()).format('YYYY-MM-DD');
+            let todayUrl = '/day/' + moment('2018-01-12').format('YYYY-MM-DD');
             if(this.$router.currentRoute.path == todayUrl){
                 this.$router.go(this.$router.currentRoute);
             }else{
