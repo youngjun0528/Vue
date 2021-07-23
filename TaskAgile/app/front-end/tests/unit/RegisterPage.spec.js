@@ -66,9 +66,21 @@ describe("RegisterPage.vue", () => {
     });
 
     it("should have form inputs bound with data model", async () => {
-        wrapper.vm.form.username = "sunny";
-        wrapper.vm.form.emailAddress = "sunny@taskagile.com";
-        wrapper.vm.form.password = "VueJsRocks!";
+        const username = "sunny";
+        const emailAddress = "sunny@taskagile.com";
+        const password = "VueJsRocks!";
+
+        // vm form 에 할당하고 바로 가져오는 것은 sync 가 맞지 않음.
+        // wrapper.vm.form.username = username;
+        // wrapper.vm.form.emailAddress = emailAddress;
+        // wrapper.vm.form.password = password;
+        await wrapper.setData({
+            form: {
+                username: username,
+                emailAddress: emailAddress,
+                password: password
+            }
+        });
 
         expect(fieldUsername.element.value).toEqual(username);
         expect(fieldEmailAddress.element.value).toEqual(emailAddress);
