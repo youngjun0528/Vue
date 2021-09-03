@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+TaskAgile/app/src/main/resources/static/
