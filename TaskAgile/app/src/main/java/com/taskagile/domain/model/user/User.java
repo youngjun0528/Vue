@@ -10,6 +10,8 @@ import java.util.Objects;
 @Table(name = "user")
 public class User extends AbstractBaseEntity {
 
+    private static final long serialVersionUID = -538781580460070724L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,6 +50,11 @@ public class User extends AbstractBaseEntity {
         user.lastName = "";
         user.createdDate = new Date();
         return user;
+    }
+
+    public void updateName(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {

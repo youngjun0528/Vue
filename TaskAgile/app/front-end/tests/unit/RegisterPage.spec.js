@@ -11,7 +11,7 @@ localVue.use(VueRouter);
 localVue.use(Vuelidate);
 const router = new VueRouter();
 
-// Mock dependency registratinService
+// Mock dependency registrationService
 jest.mock("@/services/registration");
 
 describe("RegisterPage.vue", () => {
@@ -21,10 +21,10 @@ describe("RegisterPage.vue", () => {
     let fieldPassword;
     let buttonSubmit;
     let registerSpy;
-    let submitForm;
+    let submitFormSpy;
 
     beforeEach(() => {
-        submitForm = jest.spyOn(RegisterPage.methods, "submitForm");
+        submitFormSpy = jest.spyOn(RegisterPage.methods, "submitForm");
         wrapper = mount(RegisterPage, {
             localVue,
             router
@@ -93,22 +93,20 @@ describe("RegisterPage.vue", () => {
         // const stub = jest.fn();
         // wrapper.setMethods({ submitForm: stub });
         buttonSubmit.trigger("submit");
-        expect(submitForm).toBeCalled();
+        expect(submitFormSpy).toBeCalled();
     });
 
     it("should register when it is a new user", async () => {
         expect.assertions(2);
         const stub = jest.fn();
         wrapper.vm.$router.push = stub;
-
         wrapper.vm.form.username = "sunny";
         wrapper.vm.form.emailAddress = "sunny@taskagile.com";
         wrapper.vm.form.password = "JestRocks!";
-
-        wrapper.vm.submitForm();
+        await wrapper.vm.submitForm();
         expect(registerSpy).toBeCalled();
         await wrapper.vm.$nextTick();
-        expect(stub).toHaveBeenCalledWith({ name: "LoginPage" });
+        expect(stub).toHaveBeenCalledWith({ name: "login" });
     });
 
     it("should fail it is not a new user", async () => {
@@ -118,13 +116,13 @@ describe("RegisterPage.vue", () => {
         wrapper.vm.form.emailAddress = "ted@taskagile.com";
         wrapper.vm.form.password = "JestRocks!";
 
-        expect(wrapper.find("#errorForm").isVisible()).toBe(false);
+        expect(wrapper.find(".failed").isVisible()).toBe(false);
         // 예제에는 nextTick 만 await 를 걸었으나,
         // submitForm에서 걸어서 값이 할당 된 후에 확인 하도록 처리
         await wrapper.vm.submitForm();
         expect(registerSpy).toBeCalled();
         await wrapper.vm.$nextTick();
-        expect(wrapper.find("#errorForm").isVisible()).toBe(true);
+        expect(wrapper.find(".failed").isVisible()).toBe(true);
     });
 
     it("should fail when the email address is invalid", () => {

@@ -1,22 +1,19 @@
 package com.taskagile.web.payload;
 
-import java.util.Set;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Before;
-import org.junit.Test;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * RegistrationPayloadTests
- */
 public class RegistrationPayloadTests {
+
     private Validator validator;
 
     @Before
@@ -28,6 +25,7 @@ public class RegistrationPayloadTests {
     @Test
     public void validate_blankPayload_shouldFail() {
         RegistrationPayload payload = new RegistrationPayload();
+
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(3, violations.size());
     }
@@ -108,4 +106,5 @@ public class RegistrationPayloadTests {
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(1, violations.size());
     }
+
 }

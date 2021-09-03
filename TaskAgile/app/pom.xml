@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.2</version>
+        <version>2.5.4</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>taskagile</groupId>
@@ -13,7 +13,10 @@
     <name>TaskAgile</name>
     <description>Open source task management tool</description>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <commons-io.version>2.11.0</commons-io.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,12 +41,34 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
         </dependency>
 
         <dependency>
@@ -63,6 +88,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <!-- 예제에는 없지만 필요한 maven repasitory -->
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
         <dependency>
@@ -78,13 +104,6 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -98,6 +117,10 @@
                         <goals>
                             <goal>start</goal>
                         </goals>
+                        <configuration>
+                            <!-- Application may need longer than 60 * 500ms to start. Set to 60 * 1000ms. -->
+                            <wait>1000</wait>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>post integration test</id>
@@ -163,7 +186,7 @@
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>test:e2e</argument>
+                                <argument>test:integration</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -237,7 +260,7 @@
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <outputDirectory>${basedir}/target/dasses/static</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>front-end/dist</directory>
@@ -256,7 +279,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${basedir}/src/nain/resources/static/static</directory>
+                            <directory>${basedir}/src/main/resources/static/static</directory>
                         </fileset>
                         <fileset>
                             <directory>${basedir}/src/main/resources/templates</directory>
@@ -269,5 +292,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

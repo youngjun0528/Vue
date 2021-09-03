@@ -5,10 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "test": "npm run test:unit && npm run test:e2e",
-    "lint": "vue-cli-service lint"
+    "test:integration": "vue-cli-service test:e2e --url http://localhost:8080/",
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -16,6 +17,7 @@
     "core-js": "^3.6.5",
     "popper.js": "^1.16.1",
     "query": "^0.2.0",
+    "lodash": "^4.17.10",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuelidate": "^0.7.6",
@@ -31,8 +33,12 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.2.1",
+    "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
-    "chromedriver": "91",
+    "babel-jest": "^23.0.1",
+    "chance": "^1.0.16",
+    "chromedriver": "^92.0.2",
+    "del": "^3.0.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.20.2",
