@@ -3,6 +3,7 @@ import RegisterPage from "@/views/RegisterPage";
 import VueRouter from "vue-router";
 import Vuelidate from "vuelidate";
 import registrationService from "@/services/registration";
+import { i18n } from "@/i18n";
 
 // Adding Vue Router to the test so that
 // we can access vm.$router
@@ -11,7 +12,7 @@ localVue.use(VueRouter);
 localVue.use(Vuelidate);
 const router = new VueRouter();
 
-// Mock dependency registrationService
+// Mock dependency registratioService
 jest.mock("@/services/registration");
 
 describe("RegisterPage.vue", () => {
@@ -27,7 +28,8 @@ describe("RegisterPage.vue", () => {
         submitFormSpy = jest.spyOn(RegisterPage.methods, "submitForm");
         wrapper = mount(RegisterPage, {
             localVue,
-            router
+            router,
+            i18n
         });
         fieldUsername = wrapper.find("#username");
         fieldEmailAddress = wrapper.find("#emailAddress");
@@ -48,7 +50,7 @@ describe("RegisterPage.vue", () => {
 
     it("should render registration form", () => {
         expect(wrapper.find(".logo").attributes().src).toEqual(
-            "/static/images/logo.png"
+            "/images/logo.png"
         );
         expect(wrapper.find(".tagline").text()).toEqual(
             "Open source task management tool"
@@ -81,7 +83,6 @@ describe("RegisterPage.vue", () => {
                 password: password
             }
         });
-
         expect(fieldUsername.element.value).toEqual(username);
         expect(fieldEmailAddress.element.value).toEqual(emailAddress);
         expect(fieldPassword.element.value).toEqual(password);
@@ -103,6 +104,8 @@ describe("RegisterPage.vue", () => {
         wrapper.vm.form.username = "sunny";
         wrapper.vm.form.emailAddress = "sunny@taskagile.com";
         wrapper.vm.form.password = "JestRocks!";
+        // 예제에는 nextTick 만 await 를 걸었으나,
+        // submitForm에서 걸어서 값이 할당 된 후에 확인 하도록 처리
         await wrapper.vm.submitForm();
         expect(registerSpy).toBeCalled();
         await wrapper.vm.$nextTick();
@@ -115,7 +118,6 @@ describe("RegisterPage.vue", () => {
         wrapper.vm.form.username = "ted";
         wrapper.vm.form.emailAddress = "ted@taskagile.com";
         wrapper.vm.form.password = "JestRocks!";
-
         expect(wrapper.find(".failed").isVisible()).toBe(false);
         // 예제에는 nextTick 만 await 를 걸었으나,
         // submitForm에서 걸어서 값이 할당 된 후에 확인 하도록 처리

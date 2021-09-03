@@ -3,12 +3,15 @@ import Vuelidate from "vuelidate";
 import VueRouter from "vue-router";
 import LoginPage from "@/views/LoginPage";
 import authenticationService from "@/services/authentication";
+import { i18n } from "@/i18n";
 
 // Setup local Vue with Vuelidate
 const localVue = createLocalVue();
 localVue.use(Vuelidate);
 localVue.use(VueRouter);
-const router = new VueRouter();
+const router = new VueRouter({
+    mode: "history"
+});
 
 // Mock dependency registratioService
 jest.mock("@/services/authentication");
@@ -21,11 +24,13 @@ describe("LoginPage.vue", () => {
     let authenticateSpy;
     let submitFormSpy;
 
+
     beforeEach(() => {
         submitFormSpy = jest.spyOn(LoginPage.methods, "submitForm");
         wrapper = mount(LoginPage, {
             localVue,
-            router
+            router,
+            i18n
         });
         fieldUsername = wrapper.find("#username");
         fieldPassword = wrapper.find("#password");
@@ -45,7 +50,7 @@ describe("LoginPage.vue", () => {
 
     it("should render login form", () => {
         expect(wrapper.find(".logo").attributes().src).toEqual(
-            "/static/images/logo.png"
+            "/images/logo.png"
         );
         expect(wrapper.find(".tagline").text()).toEqual(
             "Open source task management tool"
@@ -67,6 +72,7 @@ describe("LoginPage.vue", () => {
     it("should have form inputs bound with data model", async () => {
         const username = "sunny";
         const password = "VueJsRocks!";
+
         // vm form 에 할당하고 바로 가져오는 것은 sync 가 맞지 않음.
         // wrapper.vm.form.username = username;
         // wrapper.vm.form.password = password;
@@ -76,7 +82,6 @@ describe("LoginPage.vue", () => {
                 password: password
             }
         });
-
         expect(fieldUsername.element.value).toEqual(username);
         expect(fieldPassword.element.value).toEqual(password);
     });

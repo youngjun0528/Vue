@@ -33,10 +33,7 @@ module.exports = {
 
         browser.pause(2000);
 
-        homePage
-            .navigate()
-            .expect.element("@pageTitle")
-            .text.to.contain("Home Page");
+        homePage.navigate().assert.visible("@logoImage");
 
         browser.end();
     },
@@ -47,10 +44,7 @@ module.exports = {
 
         browser.pause(2000);
 
-        homePage
-            .navigate()
-            .expect.element("@pageTitle")
-            .text.to.contain("Home Page");
+        homePage.navigate().assert.visible("@logoImage");
 
         browser.end();
     }

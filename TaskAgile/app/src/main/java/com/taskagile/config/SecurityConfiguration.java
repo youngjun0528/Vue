@@ -1,5 +1,6 @@
 package com.taskagile.config;
 
+import com.taskagile.domain.common.security.AccessDeniedHandlerImpl;
 import com.taskagile.web.apis.authenticate.AuthenticationFilter;
 import com.taskagile.web.apis.authenticate.SimpleAuthenticationFailureHandler;
 import com.taskagile.web.apis.authenticate.SimpleAuthenticationSuccessHandler;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -24,7 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(PUBLIC).permitAll().anyRequest().authenticated().and()
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and().authorizeRequests()
+                .antMatchers(PUBLIC).permitAll().anyRequest().authenticated().and()
                 .addFilterAt(authenticationFilter(), UsernamePasswordAuthenticationFilter.class).formLogin()
                 .loginPage("/login").and().logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler())
                 .and().csrf().disable();
@@ -62,5 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new SimpleLogoutSuccessHandler();
+    }
+
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new AccessDeniedHandlerImpl();
     }
 }
