@@ -8,13 +8,30 @@
 import 'bootstrap/dist/js/bootstrap.min'
 
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    this.$bus.$on('myDataFetched', myData => {
+      // Initializing the real time connection
+      this.$rt.init(myData.settings.realTimeServerUrl, myData.user.token)
+    })
+  }
 }
 </script>
 
 <style lang="scss">
-html {
+html, body {
+  height: 100%;
   font-size: 14px;
+}
+
+#app, .page {
+  height: 100%;
+  position: relative;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
 }
 
 .public.container {
@@ -24,6 +41,10 @@ html {
 input.form-control:focus,
 textarea.form-control:focus {
   border: 1px solid #377EF6 !important;
+}
+
+.btn-cancel {
+  color: #666 !important;
 }
 
 .public {
