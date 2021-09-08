@@ -11,7 +11,16 @@ import {
     faPlus,
     faEllipsisH,
     faUserPlus,
-    faListUl
+    faListUl,
+    faWindowMaximize,
+    faUser,
+    faPaperclip,
+    faArchive,
+    faPencilAlt,
+    faComment,
+    faUndo,
+    faTrashAlt,
+    faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { i18n } from "./i18n";
@@ -32,7 +41,23 @@ axios.interceptors.response.use(
 Vue.use(Vuelidate);
 
 // Set up FontAwesome
-faLibrary.add(faHome, faSearch, faPlus, faEllipsisH, faUserPlus, faListUl);
+faLibrary.add(
+    faHome,
+    faSearch,
+    faPlus,
+    faEllipsisH,
+    faUserPlus,
+    faListUl,
+    faWindowMaximize,
+    faUser,
+    faPaperclip,
+    faArchive,
+    faPencilAlt,
+    faComment,
+    faUndo,
+    faTrashAlt,
+    faSpinner
+);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;

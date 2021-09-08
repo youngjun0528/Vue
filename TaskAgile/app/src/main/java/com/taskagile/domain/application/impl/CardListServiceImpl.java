@@ -36,7 +36,7 @@ public class CardListServiceImpl implements CardListService {
                 command.getPosition());
 
         cardListRepository.save(cardList);
-        domainEventPublisher.publish(new CardListAddedEvent(this, cardList));
+        domainEventPublisher.publish(new CardListAddedEvent(cardList, command));
         return cardList;
     }
 
@@ -45,4 +45,3 @@ public class CardListServiceImpl implements CardListService {
         cardListRepository.changePositions(command.getCardListPositions());
     }
 }
-    

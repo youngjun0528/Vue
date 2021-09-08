@@ -18,6 +18,6 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(requestDispatcher, "/rt").setAllowedOrigins("*").withSockJS();
+        registry.addHandler(requestDispatcher, "/rt").setAllowedOriginPatterns("*").withSockJS();
     }
 }

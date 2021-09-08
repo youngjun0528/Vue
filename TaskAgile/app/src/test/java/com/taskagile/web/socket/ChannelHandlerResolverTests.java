@@ -1,145 +1,137 @@
 package com.taskagile.web.socket;
 
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class ChannelHandlerInvokerTests {
+public class ChannelHandlerResolverTests {
 
-    @ChannelHandler("/test/*")
-    private static class TestChannelHandler {
-
-        @Action("execute")
-        public void execute(@ChannelValue String channel, RealTimeSession session, @Payload TestMessage message) {
-        }
+    @ChannelHandler("/boards")
+    private static class BoardsChannelHandler {
 
         @Action("subscribe")
         public void subscribe(RealTimeSession session) {
         }
+    }
 
-        @Action("empty")
-        public void empty() {
+    @ChannelHandler("/board/*")
+    private static class BoardChannelHandler {
+
+        @Action("subscribe")
+        public void subscribe(RealTimeSession session) {
         }
     }
 
-    private static class TestMessage {
-        private String message;
+    @ChannelHandler("/boards")
+    private static class DuplicateBoardsChannelHandler {
 
-        public static TestMessage create(String message) {
-            TestMessage testMessage = new TestMessage();
-            testMessage.message = message;
-            return testMessage;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (!(o instanceof TestMessage))
-                return false;
-            TestMessage that = (TestMessage) o;
-            return Objects.equals(message, that.message);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(message);
+        @Action("subscribe")
+        public void subscribe(RealTimeSession session) {
         }
     }
 
-    // --------------------------------------
+    // -----------------------------------------
     // Constructor
-    // --------------------------------------
+    // -----------------------------------------
 
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_nullHandler_shouldFail() {
-        new ChannelHandlerInvoker(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_noHandlerAnnotation_shouldFail() {
-        new ChannelHandlerInvoker(new Object());
+    @Test
+    public void constructor_emptyHandlers_shouldSucceed() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(new HashMap<>());
+        new ChannelHandlerResolver(applicationContextMock);
     }
 
     @Test
-    public void constructor_validHandler_shouldSucceed() {
-        new ChannelHandlerInvoker(new TestChannelHandler());
-    }
+    public void constructor_duplicateHandlersForSameChannel_shouldFail() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("duplicateBoardsChannelHandler", new DuplicateBoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
 
-    // --------------------------------------
-    // Method supports()
-    // --------------------------------------
-
-    @Test
-    public void supports_notFoundAction_shouldReturnFalse() {
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(new TestChannelHandler());
-        assertFalse(invoker.supports("not exist action"));
-    }
-
-    @Test
-    public void supports_existAction_shouldReturnTrue() {
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(new TestChannelHandler());
-        assertTrue(invoker.supports("execute"));
-    }
-
-    // --------------------------------------
-    // Method handle()
-    // --------------------------------------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void handle_wrongChannelValueInIncomingMessage_shouldFail() {
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(new TestChannelHandler());
-        RealTimeSession session = mock(RealTimeSession.class);
-        invoker.handle(IncomingMessage.create("/abc", "execute", ""), session);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void handle_wrongActionValueInIncomingMessage_shouldFail() {
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(new TestChannelHandler());
-        RealTimeSession session = mock(RealTimeSession.class);
-        invoker.handle(IncomingMessage.create("/test", "find", ""), session);
+        Exception exception = null;
+        try {
+            new ChannelHandlerResolver(applicationContextMock);
+        } catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+        assertEquals("Duplicated handlers found for chanel pattern `/boards`.", exception.getMessage());
     }
 
     @Test
-    public void handle_validIncomingMessageAndEmptyParameterInActionMethod_shouldSucceed() {
-        TestChannelHandler mockHandler = mock(TestChannelHandler.class);
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(mockHandler);
-        RealTimeSession session = mock(RealTimeSession.class);
-        invoker.handle(IncomingMessage.create("/test/abc", "empty", null), session);
+    public void constructor_validHandlers_shouldSucceed() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
+        new ChannelHandlerResolver(applicationContextMock);
+    }
 
-        verify(mockHandler).empty();
+    // -----------------------------------------
+    // Method findInvoker()
+    // -----------------------------------------
+
+    @Test
+    public void findInvoker_noChannelHandler_shouldReturnNull() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
+        ChannelHandlerResolver resolver = new ChannelHandlerResolver(applicationContextMock);
+        ChannelHandlerInvoker invoker = resolver.findInvoker(IncomingMessage.create("/abc", "test", ""));
+
+        assertNull(invoker);
     }
 
     @Test
-    public void handle_validIncomingMessageAndOnlySessionParameterRequired_shouldSucceed() {
-        TestChannelHandler mockHandler = mock(TestChannelHandler.class);
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(mockHandler);
-        RealTimeSession session = mock(RealTimeSession.class);
-        invoker.handle(IncomingMessage.create("/test/abc", "subscribe", null), session);
+    public void findInvoker_boardChannelWithBoardId_shouldReturnHandler() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
+        ChannelHandlerResolver resolver = new ChannelHandlerResolver(applicationContextMock);
+        ChannelHandlerInvoker invoker = resolver.findInvoker(IncomingMessage.create("/board/1", "subscribe", ""));
 
-        verify(mockHandler).subscribe(session);
+        assertNotNull(invoker);
+        assertTrue(invoker.supports("subscribe"));
     }
 
     @Test
-    public void handle_validIncomingMessageAndSessionPayloadAllRequired_shouldSucceed() {
-        TestChannelHandler mockHandler = mock(TestChannelHandler.class);
-        ChannelHandlerInvoker invoker = new ChannelHandlerInvoker(mockHandler);
-        RealTimeSession session = mock(RealTimeSession.class);
-        invoker.handle(IncomingMessage.create("/test/abc", "execute", "{\"message\": \"ABC\"}"), session);
+    public void findInvoker_boardChannelWithNoBoardId_shouldReturnHandler() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
+        ChannelHandlerResolver resolver = new ChannelHandlerResolver(applicationContextMock);
+        ChannelHandlerInvoker invoker = resolver.findInvoker(IncomingMessage.create("/board/", "subscribe", ""));
 
-        verify(mockHandler).execute("/test/abc", session, TestMessage.create("ABC"));
+        assertNotNull(invoker);
+        assertTrue(invoker.supports("subscribe"));
     }
+
+    @Test
+    public void findInvoker_boardChannelWithNotSupportedAction_shouldReturnNull() {
+        ApplicationContext applicationContextMock = mock(ApplicationContext.class);
+        Map<String, Object> handlers = new HashMap<>();
+        handlers.put("boardsChannelHandler", new BoardsChannelHandler());
+        handlers.put("boardChannelHandler", new BoardChannelHandler());
+        when(applicationContextMock.getBeansWithAnnotation(ChannelHandler.class)).thenReturn(handlers);
+        ChannelHandlerResolver resolver = new ChannelHandlerResolver(applicationContextMock);
+        ChannelHandlerInvoker invoker = resolver.findInvoker(IncomingMessage.create("/board/2", "invalidAction", ""));
+
+        assertNull(invoker);
+    }
+
 }

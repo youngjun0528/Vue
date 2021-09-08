@@ -30,6 +30,11 @@ export default new Router({
             path: "/board/:boardId",
             name: "board",
             component: BoardPage
+        },
+        {
+            path: "/card/:cardId/:cardTitle",
+            name: "card",
+            component: BoardPage
         }
     ]
 });
