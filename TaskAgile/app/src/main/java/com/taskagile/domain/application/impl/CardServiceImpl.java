@@ -59,8 +59,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public List<Activity> findCardActivities(CardId cardId) {
-        return null;
-        // return activityRepository.findCardActivities(cardId);
+        return activityRepository.findCardActivities(cardId);
     }
 
     @Override

@@ -14,5 +14,6 @@ const closeAll = function() {
 };
 
 export default {
-    error: showError
+    error: showError,
+    closeAll: closeAll
 };

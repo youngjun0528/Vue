@@ -26,6 +26,11 @@ public class HibernateCardRepository extends HibernateSupport<Card> implements C
     }
 
     @Override
+    public Card findById(CardId cardId) {
+        return getSession().find(Card.class, cardId.value());
+    }
+
+    @Override
     public List<Card> findByBoardId(BoardId boardId) {
         String sql = "SELECT c.* FROM card c LEFT JOIN card_list cl ON c.card_list_id = cl.id WHERE cl.board_id = :boardId";
         NativeQuery<Card> query = getSession().createNativeQuery(sql, Card.class);
@@ -51,11 +56,5 @@ public class HibernateCardRepository extends HibernateSupport<Card> implements C
                 return cardPositions.size();
             }
         });
-    }
-
-    @Override
-    public Card findById(CardId cardId) {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

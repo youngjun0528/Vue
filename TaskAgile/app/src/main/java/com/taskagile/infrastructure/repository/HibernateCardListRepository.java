@@ -26,6 +26,11 @@ public class HibernateCardListRepository extends HibernateSupport<CardList> impl
     }
 
     @Override
+    public CardList findById(CardListId cardListId) {
+        return getSession().find(CardList.class, cardListId.value());
+    }
+
+    @Override
     public List<CardList> findByBoardId(BoardId boardId) {
         String sql = "SELECT cl.* FROM card_list cl WHERE cl.board_id = :boardId";
         NativeQuery<CardList> query = getSession().createNativeQuery(sql, CardList.class);
@@ -50,11 +55,5 @@ public class HibernateCardListRepository extends HibernateSupport<CardList> impl
                 return cardListPositions.size();
             }
         });
-    }
-
-    @Override
-    public CardList findById(CardListId cardListId) {
-        // TODO Auto-generated method stub
-        return null;
     }
 }
