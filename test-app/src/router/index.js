@@ -1,19 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Chart from "@/components/Chart";
+import List from "@/components/List";
 import Detail from "@/components/Detail";
 
 Vue.use(VueRouter);
 
+// Router Path 지정
 const routes = [
   {
     path: "/",
-    name: "chart",
-    component: Chart,
+    name: "List",
+    component: List,
   },
   {
     path: "/detail/:id",
-    name: "detail",
+    name: "Detail",
     component: Detail,
     props: true,
   },
