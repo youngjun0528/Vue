@@ -1,0 +1,13 @@
+package decorator_pattern.solution_1;
+
+public class DisplayDecorator extends Display {
+    private Display decoratorDisplay;
+
+    public DisplayDecorator(Display decoratorDisplay) {
+        this.decoratorDisplay = decoratorDisplay;
+    }
+
+    public void draw() {
+        decoratorDisplay.draw();
+    }
+}
