@@ -14,11 +14,14 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="simple">
-    <h2 v-text="message"></h2>
+    <input id="a" type="text" v-bind:value="message">
+    <br>
+    <img v-bind:src="imagePath" />
 </div>
 <script>
     var model = {
-        message : 'First vue.js app'
+        message : 'v-bind directive',
+        imagePath: 'https://image.kyobobook.co.kr/ink/images/prom/2022/bookcast/06/bn_01.jpg'
     }
     var simple = new Vue({
         el: '#simple',
