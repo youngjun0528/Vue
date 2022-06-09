@@ -14,18 +14,16 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="simple">
-    <input id="a" type="text" v-bind:value="message">
+    <input type="text" v-model="name" placeholder="이름을 입력하세요.">
     <br>
-    <img v-bind:src="imagePath" />
+    입력된 이름 : <h2 v-html="name"></h2>
 </div>
 <script>
-    var model = {
-        message : 'v-bind directive',
-        imagePath: 'https://image.kyobobook.co.kr/ink/images/prom/2022/bookcast/06/bn_01.jpg'
-    }
-    var simple = new Vue({
+    var toway = new Vue({
         el: '#simple',
-        data: model
+        data: {
+            name : ''
+        }
     })
 </script>
 <!-- built files will be auto injected -->
