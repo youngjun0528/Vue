@@ -18,13 +18,20 @@
     <div id="account">
         예금액 : <input type="text" v-model="amount">
         <span class="material-icons" v-if="amount < 0" style="width:15px; height:15px; vertical-align:middle">error</span>
+        잔고 : <input type="text" v-model="balance">
+        <br>
+        <span v-if="balance > 1000000" >Gold</span>
+        <span v-else-if="balance > 500000" >Silver</span>
+        <span v-else-if="balance > 200000" >Bronze</span>
+        <span v-else>Basic</span>
     </div>
 </div>
 <script>
     var simple1 = new Vue({
         el: '#account',
         data: {
-            amount: 0
+            amount: 0,
+            balance: 0
         }
 
     })
