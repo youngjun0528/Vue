@@ -33,7 +33,7 @@
 </noscript>
 <div id="example">
     <p>
-        국가명 : <input type="text" v-model="countryname" placeholder="국가명"/>
+        국가명 : <input type="text" :value="countryname" placeholder="국가명" @input="nameChanged"/>
     </p>
     <table id="list">
         <thead>
@@ -87,6 +87,11 @@
                         return true
                     }
                 });
+            }
+        },
+        methods: {
+            nameChanged: function (e){
+                this.countryname = e.target.value;
             }
         }
     });
