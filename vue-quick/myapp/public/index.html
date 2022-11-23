@@ -13,89 +13,51 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <style>
-    #list {
-        width: 600px;
-        border: 1px solid black;
-        border-collapse: collapse;
+    html, body {
+        margin: 0;
+        padding: 0;
     }
 
-    #list td, #list th {
-        border: 1px solid black;
-        text-align: center;
+    #example {
+        height: 98vh;
+        min-height: 100%;
+        padding: 10px;
     }
 
-    #list > thead > tr {
-        color: yellow;
-        background-color: purple;
+    [v-cloak] {
+        display: none;
     }
-    [v-cloak] { display: none; }
 </style>
 <body>
 <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
 </noscript>
-<div id="example" v-cloak>
-    <p>
-        이름 : <input type="text" v-model="name" v-on:keyup="search" placeholder="두자 이상 입력하세요"/>
-        <!-- v-on:keyup.13="search" -->
-    </p>
-    <table id="list">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>주소</th>
-        </tr>
-        </thead>
-        <tbody id="contacts">
-        <tr v-for="contact in contactlist">
-            <td>{{ contact.no }}</td>
-            <td>{{ contact.name }}</td>
-            <td>{{ contact.tel }}</td>
-            <td>{{ contact.address }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div v-show="isProcessing === true">조회중</div>
+<div id="example" v-on:contextmenu.prevent="ctxStop" @mouseup.left="leftMouse" @mouseup.right="rightMouse">
+    <div>
+        Left Click : 왼 쪽 으 로 <br/>
+        Right Click : 오 른 쪽 으 로
+    </div>
+    <img src="images/foot.jpg" v-bind:style="{ position:'absolute', left : pos.left+ 'px', top: pos.top +'px' }"/>
 </div>
 <script>
     var vm = new Vue(
         {
             el: "#example",
-            data: {
-                name: "",
-                isProcessing: false,
-                contactlist: []
+            data : {
+                pos: {left: 100, top: 100}
             },
-            methods: {
-                search: function(e) {
-                    if (e.keyCode === 13) {
-                        var val = e.target.value;
-                        if (val.length >= 2) {
-                            this.fetchContacts();
-                        } else {
-                            this.contactlist = [];
-                        }
-                    }
+            methods : {
+                ctxStop: function (e) {
                 },
-                fetchContacts: function () {
-                    this.contactlist = [];
-                    this.isProcessing = true;
-                    var url = "http://127.0.0.1:5000/contacts_long/search/" + this.name;
-                    var vm = this;
-                    fetch(url)
-                        .then(function (response) {
-                            return response.json()
-                        }).then(function (json) {
-                        vm.contactlist = json;
-                        vm.isProcessing = false;
-                    }).catch(function (ex) {
-                        console.log('parsing failed', ex);
-                        vm.contactlist = [];
-                        vm.isProcessing = false;
-                    })
+                leftMouse: function (e) {
+                    if (this.pos.left > 30)
+                        this.pos.left -= 30;
+                    console.log("Move Left!!");
+                },
+                rightMouse: function (e) {
+                    this.pos.left += 30;
+                    console.log("Move Right!!");
                 }
             }
         })
