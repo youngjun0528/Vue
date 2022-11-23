@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <style>
     #list {
@@ -38,75 +39,23 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
 </noscript>
-<div id="example" v-cloak>
-    <p>
-        이름 : <input type="text" v-model="name" placeholder="두자 이상 입력하세요"/>
+<div id="example" class="container layout1">
+    <p><input type="text" v-model="amount" class="form-control"/></p>
+    <P>
+        <button id="deposit" v-on:click="balance += parseInt(amount)" class="btn btn-primary"> 예금</button>
+        <button id="withdraw" @click="balance -= parseInt(amount)" class="btn btn-primary">인출</button>
     </p>
-    <table id="list">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>주소</th>
-        </tr>
-        </thead>
-        <tbody id="contacts">
-        <tr v-for="contact in contactlist">
-            <td>{{ contact.no }}</td>
-            <td>{{ contact.name }}</td>
-            <td>{{ contact.tel }}</td>
-            <td>{{ contact.address }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div v-show="isProcessing === true">조회중</div>
+    <h3>계좌 잔고 : {{ balance }}</h3>
 </div>
 <script>
-    var vm = new Vue(
-        {
-            el: "#example",
-            data: {
-                name: "",
-                isProcessing: false,
-                contactlist: []
-            },
-            created: function () {
-                console.log("Created! ! ");
-            },
-            updated: function () {
-                console.log("updated! ! ");
-                console.log(this.name);
-            },
-            watch: {
-                name: function (val) {
-                    if (val.length >= 2) {
-                        this.fetchContacts();
-                    } else {
-                        this.contactlist = [];
-                    }
-                }
-            },
-            methods: {
-                fetchContacts: _.debounce(function () {
-                    this.contactlist = [];
-                    this.isProcessing = true;
-                    var url = "http://127.0.0.1:5000/contacts_long/search/" + this.name;
-                    var vm = this;
-                    fetch(url)
-                        .then(function (response) {
-                            return response.json()
-                        }).then(function (json) {
-                        vm.contactlist = json;
-                        vm.isProcessing = false;
-                    }).catch(function (ex) {
-                        console.log('parsing failed', ex);
-                        vm.contactlist = [];
-                        vm.isProcessing = false;
-                    })
-                }, 1)
-            }
-        })
+    var vm = new Vue({
+        el: "#example",
+        data: {
+            amount: 0,
+            balance: 0
+        }
+    });
+
 </script>
 <!-- built files will be auto injected -->
 </body>
