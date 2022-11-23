@@ -14,20 +14,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <style>
-    #list {
-        width: 600px;
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-
-    #list td, #list th {
-        border: 1px solid black;
-        text-align: center;
-    }
-
-    #list > thead > tr {
-        color: yellow;
-        background-color: purple;
+    .layout1 {
+        margin: 30px 30px 30px 30px;
     }
 
     [v-cloak] {
@@ -42,8 +30,8 @@
 <div id="example" class="container layout1">
     <p><input type="text" v-model="amount" class="form-control"/></p>
     <P>
-        <button id="deposit" v-on:click="balance += parseInt(amount)" class="btn btn-primary"> 예금</button>
-        <button id="withdraw" @click="balance -= parseInt(amount)" class="btn btn-primary">인출</button>
+        <button id="deposit" v-on:click="deposit" class="btn btn-primary"> 예금</button>
+        <button id="withdraw" @click="withdraw" class="btn btn-primary">인출</button>
     </p>
     <h3>계좌 잔고 : {{ balance }}</h3>
 </div>
@@ -53,9 +41,28 @@
         data: {
             amount: 0,
             balance: 0
+        },
+        methods: {
+            deposit: function (e) {
+                var amt = parseInt(this.amount);
+                if (amt <= 0) {
+                    alert("0보다 큰 값을 예금해야 합니다");
+                } else {
+                    this.balance += amt;
+                }
+            },
+            withdraw: function (e) {
+                var amt = parseInt(this.amount);
+                if (amt <= 0) {
+                    alert("0보다 큰 값을 인출할 수 있습니다");
+                } else if (amt > this.balance) {
+                    alert("잔고보다 많은 금액을 인출할 수 없습니다");
+                } else {
+                    this.balance -= amt;
+                }
+            }
         }
-    });
-
+    })
 </script>
 <!-- built files will be auto injected -->
 </body>
