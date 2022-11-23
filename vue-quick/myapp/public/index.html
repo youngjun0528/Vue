@@ -27,13 +27,11 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
 </noscript>
-<div id="example" class="container layout1">
-    <p><input type="text" v-model="amount" class="form-control"/></p>
-    <P>
-        <button id="deposit" v-on:click="deposit" class="btn btn-primary"> 예금</button>
-        <button id="withdraw" @click="withdraw" class="btn btn-primary">인출</button>
-    </p>
-    <h3>계좌 잔고 : {{ balance }}</h3>
+<div id="example" v-on:contextmenu="ctxStop">
+    <a href="https://google.com" @click="confirmFB">Google</a>
+</div>
+<div id="example2" v-on:contextmenu.prevent>
+    <a href="https://google.com" @click="confirmFB">Google</a>
 </div>
 <script>
     var vm = new Vue({
@@ -43,22 +41,26 @@
             balance: 0
         },
         methods: {
-            deposit: function (e) {
-                var amt = parseInt(this.amount);
-                if (amt <= 0) {
-                    alert("0보다 큰 값을 예금해야 합니다");
-                } else {
-                    this.balance += amt;
-                }
+            ctxStop : function(e) {
+                e.preventDefault();
             },
-            withdraw: function (e) {
-                var amt = parseInt(this.amount);
-                if (amt <= 0) {
-                    alert("0보다 큰 값을 인출할 수 있습니다");
-                } else if (amt > this.balance) {
-                    alert("잔고보다 많은 금액을 인출할 수 없습니다");
-                } else {
-                    this.balance -= amt;
+            confirmFB : function(e) {
+                if (!confirm(("Google로 이동할까요？" ))){
+                    e.preventDefault();
+                }
+            }
+        }
+    })
+    var vm = new Vue({
+        el: "#example2",
+        data: {
+            amount: 0,
+            balance: 0
+        },
+        methods: {
+            confirmFB : function(e) {
+                if (!confirm(("Google로 이동할까요？" ))){
+                    e.preventDefault();
                 }
             }
         }
