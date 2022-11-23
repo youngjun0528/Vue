@@ -28,7 +28,10 @@
         color: yellow;
         background-color: purple;
     }
-    [v-cloak] { display: none; }
+
+    [v-cloak] {
+        display: none;
+    }
 </style>
 <body>
 <noscript>
@@ -49,55 +52,62 @@
         </tr>
         </thead>
         <tbody id="contacts">
-            <tr v-for="contact in contactlist">
-                <td>{{ contact.no }}</td>
-                <td>{{ contact.name }}</td>
-                <td>{{ contact.tel }}</td>
-                <td>{{ contact.address }}</td>
-            </tr>
+        <tr v-for="contact in contactlist">
+            <td>{{ contact.no }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.tel }}</td>
+            <td>{{ contact.address }}</td>
+        </tr>
         </tbody>
     </table>
     <div v-show="isProcessing === true">조회중</div>
-    </div>
-    <script>
-        var vm = new Vue(
-            {
-                el: "#example",
-                data: {
-                    name: "",
-                    isProcessing: false,
-                    contactlist: []
-                },
-                watch: {
-                    name: function (val) {
-                        if (val.length >= 2) {
-                            this.fetchContacts();
-                        } else {
-                            this.contactlist = [];
-                        }
-                    }
-                },
-                methods: {
-                    fetchContacts: _.debounce(function () {
+</div>
+<script>
+    var vm = new Vue(
+        {
+            el: "#example",
+            data: {
+                name: "",
+                isProcessing: false,
+                contactlist: []
+            },
+            created: function () {
+                console.log("Created! ! ");
+            },
+            updated: function () {
+                console.log("updated! ! ");
+                console.log(this.name);
+            },
+            watch: {
+                name: function (val) {
+                    if (val.length >= 2) {
+                        this.fetchContacts();
+                    } else {
                         this.contactlist = [];
-                        this.isProcessing = true;
-                        var url = "http://127.0.0.1:5000/contacts_long/search/" + this.name;
-                        var vm = this;
-                        fetch(url)
-                            .then(function (response) {
-                                return response.json()
-                            }).then(function (json) {
-                            vm.contactlist = json;
-                            vm.isProcessing = false;
-                        }).catch(function (ex) {
-                            console.log('parsing failed', ex);
-                            vm.contactlist = [];
-                            vm.isProcessing = false;
-                        })
-                    }, 1)
+                    }
                 }
-            })
-    </script>
-    <!-- built files will be auto injected -->
+            },
+            methods: {
+                fetchContacts: _.debounce(function () {
+                    this.contactlist = [];
+                    this.isProcessing = true;
+                    var url = "http://127.0.0.1:5000/contacts_long/search/" + this.name;
+                    var vm = this;
+                    fetch(url)
+                        .then(function (response) {
+                            return response.json()
+                        }).then(function (json) {
+                        vm.contactlist = json;
+                        vm.isProcessing = false;
+                    }).catch(function (ex) {
+                        console.log('parsing failed', ex);
+                        vm.contactlist = [];
+                        vm.isProcessing = false;
+                    })
+                }, 1)
+            }
+        })
+</script>
+<!-- built files will be auto injected -->
 </body>
 </html>
