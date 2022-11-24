@@ -13,15 +13,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
+    .test {
+        background-color: yellow;
+        border: double 4px gray;
     }
 
-    #example {
-        height: 98vh;
-        min-height: 100%;
-        padding: 10px;
+    .over {
+        background-color: aqua;
+        width: 300px;
+        height: 100px;
     }
 
     [v-cloak] {
@@ -33,34 +33,33 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
 </noscript>
-<div id="example" v-on:contextmenu.prevent="ctxStop" @mouseup.left="leftMouse" @mouseup.right="rightMouse">
-    <div>
-        Left Click : 왼 쪽 으 로 <br/>
-        Right Click : 오 른 쪽 으 로
-    </div>
-    <img src="images/foot.jpg" v-bind:style="{ position:'absolute', left : pos.left+ 'px', top: pos.top +'px' }"/>
+<div id="example">
+    <button id="a" v-bind:style="style1" @mouseover.stop="overEvent" @mouseout.stop="outEvent">TEST</button>
 </div>
 <script>
     var vm = new Vue(
         {
             el: "#example",
-            data : {
-                pos: {left: 100, top: 100}
+            data: {
+                style1: {
+                    backgroundColor: 'aqua',
+                    border: 'solid 1px gray',
+                    with: '100px',
+                    textAlign: 'center'
+                }
             },
-            methods : {
-                ctxStop: function (e) {
+            methods: {
+                overEvent: function (e) {
+                    this.style1.backgroundColor = 'purple'
+                    this.style1.color = "yellow";
                 },
-                leftMouse: function (e) {
-                    if (this.pos.left > 30)
-                        this.pos.left -= 30;
-                    console.log("Move Left!!");
-                },
-                rightMouse: function (e) {
-                    this.pos.left += 30;
-                    console.log("Move Right!!");
+                outEvent: function (e) {
+                    this.style1.backgroundColor = 'aqua'
+                    this.style1.color = "black";
                 }
             }
-        })
+        }
+    )
 </script>
 <!-- built files will be auto injected -->
 </body>
