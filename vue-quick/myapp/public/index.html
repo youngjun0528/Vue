@@ -13,15 +13,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <style>
-    .test {
-        background-color: yellow;
-        border: double 4px gray;
+    .set1 {
+        background-color: aqua;
+        color: purple;
     }
 
-    .over {
-        background-color: aqua;
-        width: 300px;
-        height: 100px;
+    .set2 {
+        text-align: center;
+        width: 120px;
+    }
+
+    .set3 {
+        border: sandybrown dashed 1px;
     }
 
     [v-cloak] {
@@ -34,29 +37,30 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="example">
-    <div :style="{ backgroundColor : a.bc, border :a.bd, width:a.w+'px', height: a.h+'px' }"></div>
-    <button id="btn1" v-bind:style="[ myColor, myLayout ]">TEST </button>
+    <button id="btn1" v-bind:class="{ set1:s1, set2:s2, set3:s3 }"> 버 튼 1 </button>
+        <p>
+            <input type="checkbox" v-model="s1" value="true"/>set1 디 자 인 <br/>
+            <input type="checkbox" v-model="s2" value="true"/>set2 디 자 인 <br/>
+            <input type="checkbox" v-model="s3" value="true"/>set3 디 자 인 <br/>
+        </P>
+    <button id="btn2" v-bind:class="mystyle"> 버 튼 2 </button>
+    <p>
+        <input type="checkbox" v-model="mystyle.set1" value="true"/>set1 디 자 인 <br/>
+        <input type="checkbox" v-model="mystyle.set2" value="true"/>set2 디 자 인 <br/>
+        <input type="checkbox" v-model="mystyle.set3" value="true"/>set3 디 자 인 <br/>
+    </P>
 </div>
 <script>
     var vm = new Vue(
         {
             el: "#example",
             data: {
-                a: {
-                    bc: 'yellow',
-                    bd: 'solid 1ps gray',
-                    w: 200,
-                    h: 100
+                mystyle: {
+                    set1: false,
+                    set2: false,
+                    set3: false,
                 },
-                myColor: {
-                    backgroundColor: 'purple',
-                    color: 'yellow'
-                },
-                myLayout: {
-                    width: '150px',
-                    height: '80px',
-                    textAlign: 'center'
-                }
+                s1 : false, s2 : false, s3 : false
             }
         }
     )
