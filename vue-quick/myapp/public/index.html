@@ -34,28 +34,28 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="example">
-    <button id="a" v-bind:style="style1" @mouseover.stop="overEvent" @mouseout.stop="outEvent">TEST</button>
+    <div :style="{ backgroundColor : a.bc, border :a.bd, width:a.w+'px', height: a.h+'px' }"></div>
+    <button id="btn1" v-bind:style="[ myColor, myLayout ]">TEST </button>
 </div>
 <script>
     var vm = new Vue(
         {
             el: "#example",
             data: {
-                style1: {
-                    backgroundColor: 'aqua',
-                    border: 'solid 1px gray',
-                    with: '100px',
-                    textAlign: 'center'
-                }
-            },
-            methods: {
-                overEvent: function (e) {
-                    this.style1.backgroundColor = 'purple'
-                    this.style1.color = "yellow";
+                a: {
+                    bc: 'yellow',
+                    bd: 'solid 1ps gray',
+                    w: 200,
+                    h: 100
                 },
-                outEvent: function (e) {
-                    this.style1.backgroundColor = 'aqua'
-                    this.style1.color = "black";
+                myColor: {
+                    backgroundColor: 'purple',
+                    color: 'yellow'
+                },
+                myLayout: {
+                    width: '150px',
+                    height: '80px',
+                    textAlign: 'center'
                 }
             }
         }
