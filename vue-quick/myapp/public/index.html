@@ -13,20 +13,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <style>
-    .score {
-        border: solid 1px black;
-    }
-
-    .warning {
+    .boxcolor {
         background-color: orange;
-        color: purple;
     }
 
-    .warnimage {
-        width: 18px;
-        height: 18px;
-        top: 5px;
-        position: relative;
+    .center {
+        width: 200px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        border: 1px solid gray;
     }
 </style>
 <body>
@@ -35,29 +31,14 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="example">
-    <div>
-        <p>1 부 터 100 까 지 만 입 력 가 능 합 니 다 .</p>
-        <div>
-            점수 : <input type="text" class="score"
-                        v-model.number="score" v-bind:class="info"/>
-            <img src="images/error.png" class="warnimage" v-show="info.warning"/>
-        </div>
-    </div>
+    <center-box v-bind:class="boxstyle"></center-box>
 </div>
 <script>
-    var vm = new Vue(
-        {
+    Vue.component('center-box', {template: '<div class="center">중앙에 위치 </div>'})
+    var vm = new Vue({
             el: "#example",
             data: {
-                score: 0
-            },
-            computed: {
-                info: function () {
-                    if (this.score >= 1 && this.score <= 100)
-                        return {warning: false};
-                    else
-                        return {warning: true};
-                }
+                boxstyle: {boxcolor: true}
             }
         }
     )
