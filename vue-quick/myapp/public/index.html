@@ -13,22 +13,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <style>
-    .set1 {
-        background-color: aqua;
+    .score {
+        border: solid 1px black;
+    }
+
+    .warning {
+        background-color: orange;
         color: purple;
     }
 
-    .set2 {
-        text-align: center;
-        width: 120px;
-    }
-
-    .set3 {
-        border: sandybrown dashed 1px;
-    }
-
-    [v-cloak] {
-        display: none;
+    .warnimage {
+        width: 18px;
+        height: 18px;
+        top: 5px;
+        position: relative;
     }
 </style>
 <body>
@@ -37,30 +35,29 @@
         Please enable it to continue.</strong>
 </noscript>
 <div id="example">
-    <button id="btn1" v-bind:class="{ set1:s1, set2:s2, set3:s3 }"> 버 튼 1 </button>
-        <p>
-            <input type="checkbox" v-model="s1" value="true"/>set1 디 자 인 <br/>
-            <input type="checkbox" v-model="s2" value="true"/>set2 디 자 인 <br/>
-            <input type="checkbox" v-model="s3" value="true"/>set3 디 자 인 <br/>
-        </P>
-    <button id="btn2" v-bind:class="mystyle"> 버 튼 2 </button>
-    <p>
-        <input type="checkbox" v-model="mystyle.set1" value="true"/>set1 디 자 인 <br/>
-        <input type="checkbox" v-model="mystyle.set2" value="true"/>set2 디 자 인 <br/>
-        <input type="checkbox" v-model="mystyle.set3" value="true"/>set3 디 자 인 <br/>
-    </P>
+    <div>
+        <p>1 부 터 100 까 지 만 입 력 가 능 합 니 다 .</p>
+        <div>
+            점수 : <input type="text" class="score"
+                        v-model.number="score" v-bind:class="info"/>
+            <img src="images/error.png" class="warnimage" v-show="info.warning"/>
+        </div>
+    </div>
 </div>
 <script>
     var vm = new Vue(
         {
             el: "#example",
             data: {
-                mystyle: {
-                    set1: false,
-                    set2: false,
-                    set3: false,
-                },
-                s1 : false, s2 : false, s3 : false
+                score: 0
+            },
+            computed: {
+                info: function () {
+                    if (this.score >= 1 && this.score <= 100)
+                        return {warning: false};
+                    else
+                        return {warning: true};
+                }
             }
         }
     )
