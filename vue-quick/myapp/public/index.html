@@ -19,12 +19,19 @@
         template: '<option>hello</option>'
     })
 </script>
+<script type="text/x-template" id="selectTemplate">
+<select>
+    <option-component></option-component>
+</select>
+</script>
+<script>
+    Vue.component('select-component', {
+        template: '#selectTemplate'
+    })
+</script>
 <body>
 <div id="example">
-    <select>
-        <option is="option-component"></option>
-        <option is="option-component"></option>
-    </select>
+    <select-component></select-component>
 </div>
 <script>
     Vue.config.devtools = true;
