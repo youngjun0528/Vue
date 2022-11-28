@@ -20,12 +20,29 @@
     <hello-component></hello-component>
     <hello-component></hello-component>
 </div>
+<div id="exampleScript">
+    <hello-component></hello-component>
+    <hello-component></hello-component>
+    <hello-component></hello-component>
+</div>
+<template id="helloTemplate">
+    <div>hello world!!!</div>
+</template>
+<script id="helloTemplateScript">
+    <div>hello world!!!</div>
+</script>
 <script>
     Vue.component('hello-component', {
-        template: "<div>hello world !!!</div>"
+        template: '#helloTemplate'
     })
     var v = new Vue({
         el: '#example'
+    })
+    Vue.component('hello-component', {
+        template: '#helloTemplateScript'
+    })
+    var v = new Vue({
+        el: '#exampleScript'
     })
 </script>
 <!-- built files will be auto injected -->
