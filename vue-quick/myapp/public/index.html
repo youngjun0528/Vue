@@ -14,35 +14,22 @@
 </head>
 <style>
 </style>
+<script type="text/javascript">
+    Vue.component('option-component' , {
+        template: '<option>hello</option>'
+    })
+</script>
 <body>
 <div id="example">
-    <hello-component></hello-component>
-    <hello-component></hello-component>
-    <hello-component></hello-component>
+    <select>
+        <option is="option-component"></option>
+        <option is="option-component"></option>
+    </select>
 </div>
-<div id="exampleScript">
-    <hello-component></hello-component>
-    <hello-component></hello-component>
-    <hello-component></hello-component>
-</div>
-<template id="helloTemplate">
-    <div>hello world!!!</div>
-</template>
-<script id="helloTemplateScript">
-    <div>hello world!!!</div>
-</script>
 <script>
-    Vue.component('hello-component', {
-        template: '#helloTemplate'
-    })
-    var v = new Vue({
+    Vue.config.devtools = true;
+    new Vue({
         el: '#example'
-    })
-    Vue.component('hello-component', {
-        template: '#helloTemplateScript'
-    })
-    var v = new Vue({
-        el: '#exampleScript'
     })
 </script>
 <!-- built files will be auto injected -->
