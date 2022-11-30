@@ -13,21 +13,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
 <template id='listTemplate'>
-    <li>{{myMessage}}</li>
+    <ul>
+        <li>{{myMessage}}</li>
+        <li>{{count}}</li>
+        <li>{{countries}}</li>
+    </ul>
 </template>
 <script>
     Vue.component('list-component', {
         template: '#listTemplate',
-        props: [ 'myMessage' ]
+        props: {
+            myMessage : {
+                type: String,
+                default : '안녕하세요'
+            },
+            count : {
+                type: Number,
+                require: true
+            },
+            countries : {
+                type: Array,
+                default: function() {
+                    return ["대한민국"];
+                }
+            }
+        }
     })
 </script>
 <body>
 <div id="example">
-    <ul>
-        <list-component my-message="Hello"></list-component>
-        <list-component my-message="씬짜오"></list-component>
-        <list-component my-message="니하오마"></list-component>
-    </ul>
+        <list-component my-message="Hello" v-bind:count="100" v-bind:countries="['미국', '영국', '호주']"></list-component>
+        <list-component my-message="씬짜오" :count="21" :countries="['베트남']"></list-component>
+        <list-component my-message="니하오마" :countries="['중국', '타이완']"></list-component>
+        <list-component :count="1000"></list-component>
 </div>
 </body>
 <script type="text/javascript">
