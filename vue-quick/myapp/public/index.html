@@ -12,29 +12,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
-<template id='timeTemplate'>
-    <div>
-        <span>{{ nowTS }}</span>
-        <button v-on:click="timeClick">현재 시간</button>
-    </div>
+<template id='listTemplate'>
+    <li>{{myMessage}}</li>
 </template>
 <script>
-    Vue.component('time-component', {
-        template: '#timeTemplate',
-        data : function() {
-            return { nowTS : 0 }
-        },
-        methods: {
-            timeClick: function (e) {
-                this.nowTS = (new Date()).getTime();
-            }
-        }
+    Vue.component('list-component', {
+        template: '#listTemplate',
+        props: [ 'myMessage' ]
     })
 </script>
 <body>
 <div id="example">
-    <time-component></time-component>
-    <time-component></time-component>
+    <ul>
+        <list-component my-message="Hello"></list-component>
+        <list-component my-message="씬짜오"></list-component>
+        <list-component my-message="니하오마"></list-component>
+    </ul>
 </div>
 </body>
 <script type="text/javascript">
