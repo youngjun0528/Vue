@@ -12,33 +12,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
-<style>
-</style>
-<script type="text/javascript">
-    Vue.component('option-component' , {
-        template: '<option>hello</option>'
-    })
-</script>
-<script type="text/x-template" id="selectTemplate">
-<select>
-    <option-component></option-component>
-</select>
-</script>
+<template id='timeTemplate'>
+    <div>
+        <span>{{ nowTS }}</span>
+        <button v-on:click="timeClick">현재 시간</button>
+    </div>
+</template>
 <script>
-    Vue.component('select-component', {
-        template: '#selectTemplate'
+    Vue.component('time-component', {
+        template: '#timeTemplate',
+        data : function() {
+            return { nowTS : 0 }
+        },
+        methods: {
+            timeClick: function (e) {
+                this.nowTS = (new Date()).getTime();
+            }
+        }
     })
 </script>
 <body>
 <div id="example">
-    <select-component></select-component>
+    <time-component></time-component>
+    <time-component></time-component>
 </div>
-<script>
+</body>
+<script type="text/javascript">
     Vue.config.devtools = true;
-    new Vue({
+    var v = new Vue({
         el: '#example'
     })
 </script>
-<!-- built files will be auto injected -->
-</body>
 </html>
