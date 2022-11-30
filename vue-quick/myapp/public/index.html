@@ -12,46 +12,76 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
+<style>
+    #list {
+        width: 400px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    #list td, #list th {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    #list > thead > tr {
+        color: yellow;
+        background-color: purple;
+    }
+</style>
 <template id='listTemplate'>
-    <ul>
-        <li>{{myMessage}}</li>
-        <li>{{count}}</li>
-        <li>{{countries}}</li>
-    </ul>
+    <div>
+        <table id="list">
+            <thead>
+            <tr>
+                <th> 번호</th>
+                <th> 이름</th>
+                <th> 전화번호</th>
+                <th> 주소</th>
+            </tr>
+            </thead>
+            <tbody id="contacts">
+            <tr v-for="contact in contacts">
+                <td>{{ contact.no }}</td>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.tel }}</td>
+                <td>{{ contact.address }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 <script>
-    Vue.component('list-component', {
+    Vue.component('contactlist-component', {
         template: '#listTemplate',
-        props: {
-            myMessage : {
-                type: String,
-                default : '안녕하세요'
-            },
-            count : {
-                type: Number,
-                require: true
-            },
-            countries : {
-                type: Array,
-                default: function() {
-                    return ["대한민국"];
-                }
-            }
-        }
+        props: ['contacts']
     })
 </script>
 <body>
 <div id="example">
-        <list-component my-message="Hello" v-bind:count="100" v-bind:countries="['미국', '영국', '호주']"></list-component>
-        <list-component my-message="씬짜오" :count="21" :countries="['베트남']"></list-component>
-        <list-component my-message="니하오마" :countries="['중국', '타이완']"></list-component>
-        <list-component :count="1000"></list-component>
+    <h1>예방 접종</h1>
+    <hr/>
+    <h3>1 차 대상자 : 5월 1 ~ 3일</h3>
+    <contactlist-component :contacts="list1"></contactlist-component>
+    <h3>2 차 대상자 : 5월 13 ~ 15일</h3>
+    <contactlist-component :contacts="list2"></contactlist-component>
 </div>
 </body>
 <script type="text/javascript">
     Vue.config.devtools = true;
     var v = new Vue({
-        el: '#example'
+        el: '#example',
+        data: {
+            list1: [
+                {"no": 97, "name": "Kalisa Rogers", "tel": "010-3456-8296", "address": " 서울시 "},
+                {"no": 96, "name": "Jesse James", "tel": "010-3456-8295", "address": " 서울시 "},
+                {"no": 95, "name": "Jennifer Walker", "tel": "010-3456-8294", "address": " 서울시 "}
+            ],
+            list2: [
+                {"no": 82, "name": "Zenon Howard", "tel": "010-3456-8281", "address": " 서울시 "},
+                {"no": 81, "name": "Kylie Allen", "tel": "010-3456-8280", "address": " 서울시 "}
+            ]
+        }
     })
 </script>
 </html>
