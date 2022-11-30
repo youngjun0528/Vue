@@ -12,59 +12,59 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.4/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
 </head>
+<!— Child Component START -->
 <style>
-    #list {
-        width: 400px;
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-
-    #list td, #list th {
-        border: 1px solid black;
+    .buttonstyle {
+        width: 120px;
+        height: 30px;
         text-align: center;
     }
-
-    #list > thead > tr {
-        color: yellow;
-        background-color: purple;
-    }
 </style>
-<template id='listTemplate'>
+<template id="childTemplate">
     <div>
-        <table id="list">
-            <thead>
-            <tr>
-                <th> 번호</th>
-                <th> 이름</th>
-                <th> 전화번호</th>
-                <th> 주소</th>
-            </tr>
-            </thead>
-            <tbody id="contacts">
-            <tr v-for="contact in contacts">
-                <td>{{ contact.no }}</td>
-                <td>{{ contact.name }}</td>
-                <td>{{ contact.tel }}</td>
-                <td>{{ contact.address }}</td>
-            </tr>
-            </tbody>
-        </table>
+        <button class="buttonstyle" v-on:click="clickEvent" v-bind:data-lang="buttonInfo.value">
+            {{buttonInfo.text}}
+        </button>
     </div>
 </template>
-<script>
-    Vue.component('contactlist-component', {
-        template: '#listTemplate',
-        props: ['contacts']
+<script type="text/javascript">
+    Vue.component('child-component', {
+        template: '#childTemplate',
+        props: ['buttonInfo'],
+        methods: {
+            clickEvent: function (e) {
+                this.$emit('timeclick', e.target.innerText, e.target.dataset.lang);
+            }
+        }
     })
 </script>
+<!— Child Component END -->
+<!— Parent Component START -->
+<template id="parent-template">
+    <div>
+        <child-component v-for="s in buttons" v-bind:button-info="s" v-on:timeclick="timeclickEvent"></child-component>
+        <hr/>
+        <div>{{ msg }}</div>
+    </div>
+</template>
+<script type="text/javascript">
+    Vue.component('parent-component', {
+        template: '#parent-template',
+        props: ['buttons'],
+        data: function () {
+            return {msg: ""};
+        },
+        methods: {
+            timeclickEvent: function (k, v) {
+                this.msg = k + ", " + v;
+            },
+        }
+    })
+</script>
+<!-- Parent Component END -->
 <body>
 <div id="example">
-    <h1>예방 접종</h1>
-    <hr/>
-    <h3>1 차 대상자 : 5월 1 ~ 3일</h3>
-    <contactlist-component :contacts="list1"></contactlist-component>
-    <h3>2 차 대상자 : 5월 13 ~ 15일</h3>
-    <contactlist-component :contacts="list2"></contactlist-component>
+    <parent-component :buttons="buttons"></parent-component>
 </div>
 </body>
 <script type="text/javascript">
@@ -72,14 +72,10 @@
     var v = new Vue({
         el: '#example',
         data: {
-            list1: [
-                {"no": 97, "name": "Kalisa Rogers", "tel": "010-3456-8296", "address": " 서울시 "},
-                {"no": 96, "name": "Jesse James", "tel": "010-3456-8295", "address": " 서울시 "},
-                {"no": 95, "name": "Jennifer Walker", "tel": "010-3456-8294", "address": " 서울시 "}
-            ],
-            list2: [
-                {"no": 82, "name": "Zenon Howard", "tel": "010-3456-8281", "address": " 서울시 "},
-                {"no": 81, "name": "Kylie Allen", "tel": "010-3456-8280", "address": " 서울시 "}
+            buttons: [
+                {text: "Hello", value: "영어"},
+                {text: "씬짜오", value: " 베트남어 "},
+                {text: "니하오", value: " 중국어 "}
             ]
         }
     })
