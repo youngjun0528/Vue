@@ -11,7 +11,7 @@
 
 <script>
 import Constant from "@/Constant";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   computed : mapState(['todolist']),
@@ -25,16 +25,16 @@ export default {
       if (done) return {checked: true};
       else return {checked: false};
     },
-    // doneToggle: function (id) {
-    //   this.$store.commit(Constant.DONE_TOGGLE, {id: id});
-    // },
-    // deleteTodo: function (id) {
-    //   this.$store.commit(Constant.DELETE_TODO, {id: id});
-    // }
-    ...mapMutations([
-      Constant.DELETE_TODO,
-      Constant.DONE_TOGGLE
-    ])
+    doneToggle: function (id) {
+      this.$store.dispatch(Constant.DONE_TOGGLE, {id: id});
+    },
+    deleteTodo: function (id) {
+      this.$store.dispatch(Constant.DELETE_TODO, {id: id});
+    }
+    // ...mapMutations([
+    //   Constant.DELETE_TODO,
+    //   Constant.DONE_TOGGLE
+    // ])
   }
 }
 </script>

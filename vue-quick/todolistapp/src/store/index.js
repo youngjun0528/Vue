@@ -25,6 +25,20 @@ const store = new Vuex.Store({
         [Constant.DELETE_TODO]: (state, payload) => {
             state.todolist.splice(payload.index, 1);
         }
+    },
+    actions: {
+        [Constant.ADD_TODO]: (state, payload) => {
+            console.log("### addTodo", payload);
+            store.commit(Constant.ADD_TODO, payload);
+        },
+        [Constant.DONE_TOGGLE]: (state, payload) => {
+            console.log("### doneToggle", payload);
+            store.commit(Constant.DONE_TOGGLE, payload);
+        },
+        [Constant.DELETE_TODO]: (state, payload) => {
+            console.log("### deleteTodo", payload);
+            store.commit(Constant.DELETE_TODO, payload);
+        }
     }
 })
 
