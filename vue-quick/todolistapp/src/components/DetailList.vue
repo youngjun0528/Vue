@@ -1,52 +1,40 @@
 <template>
   <ul id="todolist">
-    <li v-for="a in todolist" :key="a.id" :class="checked(a.done)" @click="doneToggle(a.id)">
+    <li v-for="a in todolist" :key="a.id" :class="checked(a.done)"
+        @click="doneToggle({ id: a.id})">
       <span>{{ a.todo }}</span>
       <span v-if="a.done"> (완 료 )</span>
-      <span class="close" v-on:click.stop="deleteTodo(a.id)">&#x00D7;</span>
+      <span class="close" v-on:click.stop="deleteTodo({ id: a.id})">&#x00D7;</span>
     </li>
   </ul>
 </template>
 
 <script>
-import eventBus from '../EventBus'
+import Constant from "@/Constant";
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  created: function () {
-    eventBus.$on('add-todo',
-        this.addTodo
-    );
-  },
-  data: function () {
-    return {
-      todolist: [
-        {id: 1, todo: "영 화 보 기 ", done: false},
-        {id: 2, todo: "주 말 산 책 ", done: true},
-        {id: 3, todo: "ES6 학 습 ", done: false},
-        {id: 4, todo: "잠실 야 구 장 ", done: false},
-      ]
-    }
-  },
+  computed : mapState(['todolist']),
+  // {
+  //   todolist(){
+  //     return this.$store.state.todolist;
+  //   }
+  // },
   methods: {
     checked: function (done) {
       if (done) return {checked: true};
       else return {checked: false};
     },
-    addTodo: function (todo) {
-      if (todo !== "") {
-        this.todolist.push(
-            {id: new Date().getTime(), todo: todo, done: false}
-        );
-      }
-    },
-    doneToggle: function (id) {
-      let index = this.todolist.findIndex((item) => item.id === id);
-      this.todolist[index].done = !this.todolist[index].done;
-    },
-    deleteTodo: function (id) {
-      let index = this.todolist.findIndex((item) => item.id === id);
-      this.todolist.splice(index, 1);
-    }
+    // doneToggle: function (id) {
+    //   this.$store.commit(Constant.DONE_TOGGLE, {id: id});
+    // },
+    // deleteTodo: function (id) {
+    //   this.$store.commit(Constant.DELETE_TODO, {id: id});
+    // }
+    ...mapMutations([
+      Constant.DELETE_TODO,
+      Constant.DONE_TOGGLE
+    ])
   }
 }
 </script>
