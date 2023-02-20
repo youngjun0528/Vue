@@ -2,23 +2,23 @@
   <div class="modal">
     <div class="form" @keyup.esc="cancelEvent">
       <h3 class="heading">:: {{ headingText }}</h3>
-      <div v-if="mode=='update'" class="form-group">
+      <div v-if="mode==='update'" class="form-group">
         <label>일련번호</label>
-        <input type="text" name="no" class="long" disabled v-model="contactForm.no">
+        <input type="text" name="no" class="long" disabled v-model="contact.no"/>
       </div>
       <div class="form-group">
         <label>이름</label>
-        <input type="text" name="name" class="long" v-model="contactForm.name"
+        <input type="text" name="name" class="long" v-model="contact.name"
                ref="name" placeholder="이름을 입력하세요"/>
       </div>
       <div class="form-group">
         <label>전화번호</label>
-        <input type="text" name="tel" class="long" v-model="contactForm.tel"
+        <input type="text" name="tel" class="long" v-model="contact.tel"
                placeholder="전화번호를 입력하세요"/>
       </div>
       <div class="form-group">
         <label>주 소</label>
-        <input type="text" name="address" class="long" v-model="contactForm.address"
+        <input type="text" name="address" class="long" v-model="contact.address"
                placeholder="주소를 입력하세요"/>
       </div>
       <div class="form-group">
@@ -33,55 +33,35 @@
 </template>
 
 <script>
-import eventBus from '../EventBus.js';
+import Constant from "@/Constant";
+import {mapState} from "vuex";
 
 export default {
   name: "contactForm",
-  data() {
-    return {
-      contactForm: {no: '', name: '', tel: '', address: '', photo: ''}
-    }
-  },
-  watch: {
-    // `visible(value) => this.isVisible = value` could work too
-    contact() {
-      this.contactForm = this.$props.contact
-    }
-  },
-  props: {
-    mode: {type: String, default: 'add'},
-    contact: {
-      type: Object,
-      default: function () {
-        return {no: '', name: '', tel: '', address: '', photo: ''}
-      }
-    }
-  },
   mounted: function () {
     this.$refs.name.focus()
   },
   computed: {
     btnText: function () {
-      if (this.mode != 'update') return '추 가';
+      if (this.mode !== 'update') return '추 가';
       else return '수 정';
     },
     headingText: function () {
-      if (this.mode != 'update') return '새로운 연락처 추가';
+      if (this.mode !== 'update') return '새로운 연락처 추가';
       else return '연락처 변경';
-    }
+    },
+    ...mapState(['mode', 'contact'])
   },
   methods: {
     submitEvent: function () {
-      if (this.mode == "update") {
-        console.log(this.contactForm)
-        eventBus.$emit("updateSubmit", this.contactForm)
+      if (this.mode === "update") {
+        this.$store.dispatch(Constant.UPDATE_CONTACT)
       } else {
-        console.log(this.contactForm)
-        eventBus.$emit("addSubmit", this.contactForm);
+        this.$store.dispatch(Constant.ADD_CONTACT);
       }
     },
     cancelEvent: function () {
-      eventBus.$emit("cancel");
+      this.$store.dispatch(Constant.CANCEL_FORM);
     }
   }
 }
