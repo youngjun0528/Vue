@@ -5,13 +5,13 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/home">Home</router-link>
+            <router-link :to="{name: 'home'}">Home</router-link>
           </li>
           <li>
-            <router-link to="/about">About</router-link>
+            <router-link :to="{name: 'about'}">About</router-link>
           </li>
           <li>
-            <router-link to="/contacts">Contacts</router-link>
+            <router-link :to="{name: 'contacts'}">Contacts</router-link>
           </li>
         </ul>
       </nav>
@@ -32,12 +32,12 @@ import VueRouter from "vue-router";
 const router = new VueRouter({
   routes: [
     {path: '/', component: TestHome},
-    {path: '/home', component: TestHome},
-    {path: '/about', component: TestAbout},
+    {path: '/home', name: 'home', component: TestHome},
+    {path: '/about', name: 'about', component: TestAbout},
     {
-      path: '/contacts', component: TestContact,
+      path: '/contacts', name: 'contacts', component: TestContact,
       children: [
-        {path: ':no', component: ContactByNo}
+        {path: ':no', name: 'contactbyno', component: ContactByNo}
       ]
     },
   ]

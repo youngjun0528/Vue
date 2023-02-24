@@ -4,7 +4,7 @@
     <h3>{{ (new Date()).toTimeString() }}</h3>
     <div class="wrapper">
       <div class="box" v-for="c in contacts" :key="c.no">
-        <router-link :to="'/contacts/'+c.no">{{ c.name }}</router-link>
+        <router-link :to="{name: 'contactbyno', params:{no:c.no}}">{{ c.name }}</router-link>
       </div>
     </div>
     <router-view></router-view>
