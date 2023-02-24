@@ -34,8 +34,12 @@ const router = new VueRouter({
     {path: '/', component: TestHome},
     {path: '/home', component: TestHome},
     {path: '/about', component: TestAbout},
-    {path: '/contacts', component: TestContact},
-    {path: '/contacts/:no', component: ContactByNo}
+    {
+      path: '/contacts', component: TestContact,
+      children: [
+        {path: ':no', component: ContactByNo}
+      ]
+    },
   ]
 })
 

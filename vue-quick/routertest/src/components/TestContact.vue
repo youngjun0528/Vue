@@ -7,6 +7,7 @@
         <router-link :to="'/contacts/'+c.no">{{ c.name }}</router-link>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
