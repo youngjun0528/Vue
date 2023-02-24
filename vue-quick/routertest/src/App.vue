@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="header">
+    <div class="header">
       <h1 class="headerText">(주)OpenSG</h1>
       <nav>
         <ul>
@@ -27,9 +27,11 @@ import TestHome from './components/TestHome.vue'
 import TestAbout from './components/TestAbout.vue'
 import TestContact from './components/TestContact.vue'
 import ContactByNo from "@/components/ContactByNo.vue";
+import NotFound from "@/components/NotFound.vue";
 import VueRouter from "vue-router";
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {path: '/', component: TestHome},
     {path: '/home', name: 'home', component: TestHome},
@@ -48,6 +50,7 @@ const router = new VueRouter({
         }
       ]
     },
+    {path: '*', component: NotFound}
   ]
 })
 
@@ -68,11 +71,11 @@ export default {
 <style>
 .header {
   background-color: aqua;
-  padding: 10px 0px 0px 0px;
+  padding: 10px 0 0 0;
 }
 
 .headerText {
-  padding: 0px 20px 0px 20px;
+  padding: 0 20px 0 20px;
 }
 
 ul {
