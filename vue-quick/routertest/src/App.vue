@@ -37,12 +37,28 @@ const router = new VueRouter({
     {
       path: '/contacts', name: 'contacts', component: TestContact,
       children: [
-        {path: ':no', name: 'contactbyno', component: ContactByNo}
+        {path: ':no', name: 'contactbyno', component: ContactByNo,
+        beforeEnter: (to, from, next)=>{
+          console.log("beforeEnter : " + from.path + "--->" + to.path);
+          if (from.path.startsWith('/contacts'))
+            next();
+          else
+            next('/home');
+        }
+        }
       ]
     },
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  console.log("beforeEach");
+  next();
+})
+
+router.afterEach(() => {
+  console.log("afterEach");
+})
 export default {
   name: 'App',
   router

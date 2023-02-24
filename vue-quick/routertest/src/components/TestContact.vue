@@ -4,7 +4,9 @@
     <h3>{{ (new Date()).toTimeString() }}</h3>
     <div class="wrapper">
       <div class="box" v-for="c in contacts" :key="c.no">
-        <router-link :to="{name: 'contactbyno', params:{no:c.no}}">{{ c.name }}</router-link>
+        <span @click="navigate(c.no)" style="cursor:pointer">
+          [ {{ c.name }} ]
+        </span>
       </div>
     </div>
     <router-view></router-view>
@@ -19,6 +21,21 @@ export default {
   data: function () {
     return {
       contacts: contactlist.contacts
+    }
+  },
+  methods: {
+    navigate(no) {
+      if (confirm('상세 정보를 보시겠습니까?')) {
+        this.$router.push({
+              name: 'contactbyno',
+              params: {
+                no: no
+              }
+            },
+            function () {
+              console.log('/contacts/' + no + '로 이동 완료')
+            })
+      }
     }
   }
 }

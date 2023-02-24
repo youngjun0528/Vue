@@ -40,10 +40,15 @@ export default {
   created() {
     this.no = this.$route.params.no;
   },
-  watch: {
-    '$route': function (to) {
-      this.no = to.params.no;
-    }
+  // watch: {
+  //   '$route': function (to) {
+  //     this.no = to.params.no;
+  //   }
+  // },
+  beforeRouteUpdate(to, _, next) {
+    console.log("beforeRouteUpdate")
+    this.no = to.params.no;
+    next();
   },
   computed: {
     contact: function () {
