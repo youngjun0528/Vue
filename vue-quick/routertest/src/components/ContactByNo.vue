@@ -31,25 +31,25 @@ import contactlist from "@/ContactList";
 
 export default {
   name: "ContactByNo",
+  props: ['no'],
   data: function () {
     return {
-      no: 0,
       contacts: contactlist.contacts
     }
   },
-  created() {
-    this.no = this.$route.params.no;
-  },
-  // watch: {
-  //   '$route': function (to) {
-  //     this.no = to.params.no;
-  //   }
+  // created() {
+  //   this.no = this.$route.params.no;
   // },
-  beforeRouteUpdate(to, _, next) {
-    console.log("beforeRouteUpdate")
-    this.no = to.params.no;
-    next();
-  },
+  // // watch: {
+  // //   '$route': function (to) {
+  // //     this.no = to.params.no;
+  // //   }
+  // // },
+  // beforeRouteUpdate(to, _, next) {
+  //   console.log("beforeRouteUpdate")
+  //   this.no = to.params.no;
+  //   next();
+  // },
   computed: {
     contact: function () {
       var no = this.no;

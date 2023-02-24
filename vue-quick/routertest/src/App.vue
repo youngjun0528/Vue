@@ -39,14 +39,16 @@ const router = new VueRouter({
     {
       path: '/contacts', name: 'contacts', component: TestContact,
       children: [
-        {path: ':no', name: 'contactbyno', component: ContactByNo,
-        beforeEnter: (to, from, next)=>{
-          console.log("beforeEnter : " + from.path + "--->" + to.path);
-          if (from.path.startsWith('/contacts'))
-            next();
-          else
-            next('/home');
-        }
+        {
+          path: ':no', name: 'contactbyno', component: ContactByNo,
+          beforeEnter: (to, from, next) => {
+            console.log("beforeEnter : " + from.path + "--->" + to.path);
+            if (from.path.startsWith('/contacts'))
+              next();
+            else
+              next('/home');
+          },
+          props: true
         }
       ]
     },
