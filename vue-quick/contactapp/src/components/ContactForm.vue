@@ -33,13 +33,25 @@
 </template>
 
 <script>
-import Constant from "@/Constant";
-import {mapState} from "vuex";
+import Constant from '../Constant';
+import {mapState} from 'vuex';
 
 export default {
   name: "contactForm",
+  data: function () {
+    return {mode: "add"}
+  },
+  props: ['no'],
   mounted: function () {
-    this.$refs.name.focus()
+    this.$refs.name.focus();
+    var cr = this.$router.currentRoute;
+    if (cr.fullPath.indexOf('/add') > -1) {
+      this.mode = "add";
+      this.$store.dispatch(Constant.INITIALIZE_CONTACT_ONE);
+    } else if (cr.fullPath.indexOf('/update') > -1) {
+      this.mode = "update";
+      this.$store.dispatch(Constant.FETCH_CONTACT_ONE, {no: this.no});
+    }
   },
   computed: {
     btnText: function () {
@@ -50,18 +62,20 @@ export default {
       if (this.mode !== 'update') return '새로운 연락처 추가';
       else return '연락처 변경';
     },
-    ...mapState(['mode', 'contact'])
+    ...mapState(['contact', 'contactlist'])
   },
   methods: {
     submitEvent: function () {
       if (this.mode === "update") {
-        this.$store.dispatch(Constant.UPDATE_CONTACT)
+        this.$store.dispatch(Constant.UPDATE_CONTACT);
+        this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}});
       } else {
         this.$store.dispatch(Constant.ADD_CONTACT);
+        this.$router.push({name: 'contacts', query: {page: 1}});
       }
     },
     cancelEvent: function () {
-      this.$store.dispatch(Constant.CANCEL_FORM);
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}});
     }
   }
 }
@@ -99,7 +113,7 @@ export default {
 .form label {
   text-align: left;
   margin: 0 0 3px 0;
-  padding: 0px;
+  padding: 0;
   display: block;
   font-weight: bold;
 }
@@ -108,7 +122,7 @@ export default {
   box-sizing: border-box;
   border: 1px solid #BEBEBE;
   padding: 7px;
-  margin: 0px;
+  margin: 0;
   outline: none;
 }
 
@@ -134,7 +148,6 @@ export default {
   padding: 20px;
   color: #fff;
   margin: 5px 0 30px 0;
-  padding: 10px;
   min-width: 200px;
   max-width: 400px;
 }

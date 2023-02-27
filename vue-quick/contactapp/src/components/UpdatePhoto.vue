@@ -6,7 +6,7 @@
         <input type="hidden" name="no" class="long" disabled v-model="contact.no"/>
         <div>
           <label>현재 사진</label>
-          <img class="thumb" :src="contact.photo"/>
+          <img class="thumb" :src="contact.photo" alt="contact.photo" />
         </div>
         <div>
           <label>사진 파일 선택</label>
@@ -28,19 +28,24 @@
 </template>
 
 <script>
-import Constant from "@/Constant";
-import {mapState} from "vuex";
+import Constant from '../Constant';
+import {mapState} from 'vuex';
 
 export default {
   name: "updatePhoto",
-  computed: mapState(['contact']),
+  props: ['no'],
+  computed: mapState(['contact', 'contactlist']),
+  mounted: function () {
+    this.$store.dispatch(Constant.FETCH_CONTACT_ONE, {no: this.no});
+  },
   methods: {
     cancelEvent: function () {
-      this.$store.dispatch(Constant.CANCEL_FORM);
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}});
     },
     photoSubmit: function () {
       var file = this.$refs.photofile.files[0];
       this.$store.dispatch(Constant.UPDATE_PHOTO, {no: this.contact.no, file: file});
+      this.$router.push({name: 'contacts', query: {page: this.contactlist.pageno}});
     }
   }
 }
@@ -51,7 +56,6 @@ export default {
   z-index: 10;
   display: block;
   position: fixed;
-  z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
@@ -80,7 +84,7 @@ export default {
 .form label {
   text-align: left;
   margin: 0 0 3px 0;
-  padding: 0px;
+  padding: 0;
   display: block;
   font-weight: bold;
 }
@@ -89,7 +93,7 @@ export default {
   box-sizing: border-box;
   border: 1px solid #BEBEBE;
   padding: 7px;
-  margin: 0px;
+  margin: 0;
   outline: none;
 }
 
@@ -104,7 +108,6 @@ export default {
   padding: 20px;
   color: #fff;
   margin: 5px 0 30px 0;
-  padding: 10px;
   min-width: 200px;
   max-width: 400px;
 }
