@@ -1,20 +1,20 @@
 <template>
-  <ul id="todolist">
+  <transition-group name="list" tag="ul">
     <li v-for="a in todolist" :key="a.id" :class="checked(a.done)"
         @click="doneToggle({ id: a.id})">
       <span>{{ a.todo }}</span>
       <span v-if="a.done"> (완 료 )</span>
       <span class="close" v-on:click.stop="deleteTodo({ id: a.id})">&#x00D7;</span>
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
 import Constant from "@/Constant";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
-  computed : mapState(['todolist']),
+  computed: mapState(['todolist']),
   // {
   //   todolist(){
   //     return this.$store.state.todolist;
@@ -95,5 +95,15 @@ ul li.checked::before {
 .close:hover {
   background-color: #f44336;
   color: white;
+}
+
+.list-enter-active, .list-leave-active {
+  transition: all 0.5s;
+}
+
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+
 }
 </style>
