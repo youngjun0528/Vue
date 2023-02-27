@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "velocity-animate": "^1.5.2",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
