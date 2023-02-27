@@ -1,0 +1,5 @@
+- npm init
+- sudo npm install -g babel-cli yarn
+- npm install --save-dev babel-cli babel-preset-env babel-preset-stage-2
+- babel src -d build
+- node {source}
