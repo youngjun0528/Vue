@@ -9,7 +9,9 @@
         <router-link to="/contacts" class="btn btn-info menu">Contacts</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <transition name="flip" mode="out-in">
+      <router-view></router-view>
+    </transition>
     <loading v-show="isloading"></loading>
   </div>
 </template>
@@ -38,4 +40,19 @@ export default {
 .menu {
   width: 100px;
 }
+
+.flip-enter-active {
+  transition: all .4s ease-in-out;
+}
+
+.flip-leave-active {
+  transition: all .4s ease-in-out;
+}
+
+.flip-enter, .flip-leave-to {
+  transform: scaleY(0) translateZ(0);
+  opacity: 0;
+}
+
+
 </style>
